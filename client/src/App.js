@@ -1,15 +1,25 @@
-import "./App.css";
+import React, { useEffect } from "react";
+// import { Helmet } from "react-helmet";
+import Head from "./Components/Head";
+import Header from "./Components/Header";
 
 function App() {
   // Test db access from client
-  fetch("http://localhost:5000/api/courses")
-    .then((response) => response.json())
-    .then((data) => console.log(data));
+  useEffect(() => {
+    fetch("http://localhost:5000/api/courses")
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }, []);
 
   return (
-    <div className="App">
-      <h1>Welcome!</h1>
-    </div>
+    <>
+      <Head />
+      {/* <body> */}
+      <div id="root">
+        <Header />
+      </div>
+      {/* </body> */}
+    </>
   );
 }
 
