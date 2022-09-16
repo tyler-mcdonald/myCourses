@@ -1,5 +1,8 @@
+import { Redirect } from "react-router-dom";
+
 const SignOut = () => {
-  return <h1>SignOut</h1>;
+  // Don't render anything, just sign out user and redirect
+  // return <Redirect to="/" />;
 };
 
 export default SignOut;
