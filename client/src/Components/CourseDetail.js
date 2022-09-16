@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, redirect } from "react-router-dom";
+import axios from "axios";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
@@ -18,7 +19,7 @@ const CourseDetail = () => {
         setMaterialsNeeded(() => {
           // only works if each line begins with `*`
           const rawString = data.materialsNeeded;
-          if (!rawString) return null;
+          if (!rawString) return [];
           const list = rawString.split("*");
           // Remove empty strings & trim whitespace
           const materials = list.filter((i) => i !== "").map((i) => i.trim());
@@ -27,17 +28,24 @@ const CourseDetail = () => {
       });
   }, []);
 
-  /**
-   * Will only work if each line begins with `*`
-   */
-  // (async function listMaterialsNeeded() {
-  //   const rawString = await course.materialsNeeded;
-  //   if (!rawString) return null;
-  //   const list = rawString.split("*");
-  //   // Remove empty strings & trim whitespace
-  //   const materials = list.filter((i) => i !== "").map((i) => i.trim());
-  //   setMaterialsNeeded(materials);
-  // })();
+  const handleDelete = async () => {
+    axios
+      .delete(`http://localhost:5000/api/courses/${courseId}`, {
+        auth: {
+          username: "joe@smith.com",
+          password: "joepassword",
+        },
+      })
+      .then((response) => {
+        console.log(response.status);
+        if (response.status === 204) {
+          return redirect("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <main>
@@ -46,7 +54,7 @@ const CourseDetail = () => {
           <Link className="button" to={`/courses/${courseId}/update`}>
             Update Course
           </Link>
-          <Link className="button" to="/">
+          <Link className="button" onClick={() => handleDelete()}>
             Delete Course
           </Link>
           <Link className="button button-secondary" to="/">
