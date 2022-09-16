@@ -1,33 +1,57 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
+  const [courseOwner, setCourseOwner] = useState({});
+  const [materialsNeeded, setMaterialsNeeded] = useState([]);
   const location = useLocation();
-  const id = location.pathname.split("/")[2];
+  const courseId = location.pathname.split("/")[2];
 
   // get course data
   useEffect(() => {
-    fetch(`http://localhost:5000/api/courses/${id}`)
+    fetch(`http://localhost:5000/api/courses/${courseId}`)
       .then((response) => response.json())
-      .then((data) => setCourse(data));
+      .then((data) => {
+        setCourse(data);
+        setCourseOwner(data.User);
+        setMaterialsNeeded(() => {
+          // only works if each line begins with `*`
+          const rawString = data.materialsNeeded;
+          if (!rawString) return null;
+          const list = rawString.split("*");
+          // Remove empty strings & trim whitespace
+          const materials = list.filter((i) => i !== "").map((i) => i.trim());
+          return materials;
+        });
+      });
   }, []);
 
-  console.log(course);
+  /**
+   * Will only work if each line begins with `*`
+   */
+  // (async function listMaterialsNeeded() {
+  //   const rawString = await course.materialsNeeded;
+  //   if (!rawString) return null;
+  //   const list = rawString.split("*");
+  //   // Remove empty strings & trim whitespace
+  //   const materials = list.filter((i) => i !== "").map((i) => i.trim());
+  //   setMaterialsNeeded(materials);
+  // })();
 
   return (
     <main>
       <div className="actions--bar">
         <div className="wrap">
-          <a className="button" href="update-course.html">
+          <Link className="button" to={`/courses/${courseId}/update`}>
             Update Course
-          </a>
-          <a className="button" href="#">
+          </Link>
+          <Link className="button" to="/">
             Delete Course
-          </a>
-          <a className="button button-secondary" href="index.html">
+          </Link>
+          <Link className="button button-secondary" to="/">
             Return to List
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -38,32 +62,21 @@ const CourseDetail = () => {
             <div>
               <h3 className="course--detail--title">Course</h3>
               <h4 className="course--name">{course.title}</h4>
-              <p>#Course Owner</p>
+              <p>{`${courseOwner.firstName} ${courseOwner.lastName}`}</p>
 
-              <p>#Course description paragraph.</p>
+              <p>{course.description}</p>
 
-              <p>
-                #The specifications that follow will produce a bookcase with
-                overall dimensions of 10 3/4 in. deep x 34 in. wide x 48 in.
-                tall. While the depth of the case is directly tied to the 1 x 10
-                stock, you can vary the height, width and shelf spacing to suit
-                your needs. Keep in mind, though, that extending the width of
-                the cabinet may require the addition of central shelf supports.
-              </p>
-
-              <p>#Course description paragraph.</p>
-
-              <p>#Course description paragraph.</p>
+              <p>#another paragraph as needed</p>
             </div>
             <div>
               <h3 className="course--detail--title">Estimated Time</h3>
-              <p>#time</p>
+              <p>{course.estimatedTime}</p>
 
               <h3 className="course--detail--title">Materials Needed</h3>
               <ul className="course--detail--list">
-                <li>#materials</li>
-                <li>#materials</li>
-                <li>#materials</li>
+                {materialsNeeded.map((material, index) => (
+                  <li key={index}>{material}</li>
+                ))}
               </ul>
             </div>
           </div>

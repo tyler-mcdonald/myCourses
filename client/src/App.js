@@ -6,18 +6,15 @@ import Head from "./Components/Head";
 import Header from "./Components/Header";
 import CourseDetail from "./Components/CourseDetail";
 import Courses from "./Components/Courses";
+import UpdateCourse from "./Components/UpdateCourse";
+import SignOut from "./Components/SignOut";
+import CreateCourse from "./Components/CreateCourse";
 
 // create CreateCourse
 // create UpdateCourse
 // create UseSignIn
 // create UserSignUp
 // create UserSignOut (stateless)
-
-// CourseDetail
-//  when course button is clicked on index page
-//    navigate browser to '/courses/:id'
-//    get id from the url, and GET the course info
-//    display that info on the screen
 
 function App() {
   return (
@@ -27,8 +24,11 @@ function App() {
       <div id="root">
         <Header />
         <Routes>
-          <Route path="/" element={<Courses />} />
+          <Route exact path="/" element={<Courses />} />
+          <Route exact path="/courses/create" element={<CreateCourse />} />
           <Route path="/courses/:id" element={<CourseDetail />} />
+          <Route path="/courses/:id/update" element={<UpdateCourse />} />
+          <Route path="/signout" element={<SignOut />} />
         </Routes>
       </div>
       {/* </body> */}
