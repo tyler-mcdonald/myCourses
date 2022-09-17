@@ -11,22 +11,28 @@ const CourseDetail = () => {
 
   // get course data
   useEffect(() => {
+    getCourseData();
+  }, []);
+
+  const getCourseData = () => {
     fetch(`http://localhost:5000/api/courses/${courseId}`)
       .then((response) => response.json())
       .then((data) => {
         setCourse(data);
         setCourseOwner(data.User);
-        setMaterialsNeeded(() => {
-          // only works if each line begins with `*`
-          const rawString = data.materialsNeeded;
-          if (!rawString) return [];
-          const list = rawString.split("*");
-          // Remove empty strings & trim whitespace
-          const materials = list.filter((i) => i !== "").map((i) => i.trim());
-          return materials;
-        });
+        setMaterialsNeeded(convertStringToArray(data));
       });
-  }, []);
+  };
+
+  // only works if each line begins with `*`
+  const convertStringToArray = (data) => {
+    const rawString = data.materialsNeeded;
+    if (!rawString) return [];
+    const list = rawString.split("*");
+    // Remove empty strings & trim whitespace
+    const materials = list.filter((i) => i !== "").map((i) => i.trim());
+    return materials;
+  };
 
   const handleDelete = async () => {
     axios
