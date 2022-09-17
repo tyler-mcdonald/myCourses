@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Link, redirect } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+/** Helpers */
+import { convertStringToArray } from "../helpers/convertStringToArray";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
@@ -8,6 +10,7 @@ const CourseDetail = () => {
   const [materialsNeeded, setMaterialsNeeded] = useState([]);
   const location = useLocation();
   const courseId = location.pathname.split("/")[2];
+  const navigate = useNavigate();
 
   // get course data
   useEffect(() => {
@@ -24,16 +27,6 @@ const CourseDetail = () => {
       });
   };
 
-  // only works if each line begins with `*`
-  const convertStringToArray = (data) => {
-    const rawString = data.materialsNeeded;
-    if (!rawString) return [];
-    const list = rawString.split("*");
-    // Remove empty strings & trim whitespace
-    const materials = list.filter((i) => i !== "").map((i) => i.trim());
-    return materials;
-  };
-
   const handleDelete = async () => {
     axios
       .delete(`http://localhost:5000/api/courses/${courseId}`, {
@@ -43,9 +36,8 @@ const CourseDetail = () => {
         },
       })
       .then((response) => {
-        console.log(response.status);
         if (response.status === 204) {
-          return redirect("/");
+          return navigate("/");
         }
       })
       .catch((err) => {
