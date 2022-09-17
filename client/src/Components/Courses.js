@@ -5,7 +5,7 @@ import { UserContext } from "../App";
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const user = useContext(UserContext);
-  console.log(user);
+  // console.log(user);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/courses")

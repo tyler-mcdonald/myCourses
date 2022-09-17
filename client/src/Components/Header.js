@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 
-const Header = () => {
+const Header = ({ signOut }) => {
   const user = useContext(UserContext);
   return (
     <header>
@@ -11,19 +11,25 @@ const Header = () => {
           <Link to="/">Courses</Link>
         </h1>
         <nav>
-          <ul className="header--signedin">
-            {user ? (
-              <li>{`Welcome, ${user.name}!`}</li>
-            ) : (
+          {user ? (
+            <ul className="header--signedin">
+              <li>{`Welcome, ${user.firstName}!`}</li>
+              <li>
+                <Link to="/signout" onClick={() => signOut()}>
+                  Sign Out
+                </Link>
+              </li>
+            </ul>
+          ) : (
+            <ul className="header--signedin">
               <li>
                 <Link to="/signup">Sign Up</Link>
               </li>
-            )}
-
-            <li>
-              <Link to="/signout">Sign Out</Link>
-            </li>
-          </ul>
+              <li>
+                <Link to="/signin">Sign In</Link>
+              </li>
+            </ul>
+          )}
         </nav>
       </div>
     </header>
