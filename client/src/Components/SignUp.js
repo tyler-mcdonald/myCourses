@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ValidationErrors from "./ValidationErrors";
+import { TextInputField } from "./TextInputField";
 
 const SignUp = ({ signIn }) => {
+  const [user, setUser] = useState({});
   const [errors, setErrors] = useState([]); // do we need state for this?
-  const [firstName, setFirstName] = useState(); // refactor these into a single user state?
-  const [lastName, setLastName] = useState();
-  const [emailAddress, setEmailAddress] = useState();
-  const [password, setPassword] = useState();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -19,14 +17,14 @@ const SignUp = ({ signIn }) => {
   const createUser = () => {
     axios
       .post("http://localhost:5000/api/users", {
-        firstName,
-        lastName,
-        emailAddress,
-        password,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        emailAddress: user.emailAddress,
+        password: user.password,
       })
       .then((response) => {
         if (response.status === 201) {
-          signIn({ firstName, lastName, emailAddress });
+          signIn(user);
           console.log("New user successfully created!");
           navigate("/");
         }
@@ -44,33 +42,25 @@ const SignUp = ({ signIn }) => {
         <h2>Sign Up</h2>
         <ValidationErrors errors={errors} />
         <form onSubmit={(e) => handleSubmit(e)}>
-          <label htmlFor="firstName">First Name</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            onChange={(e) => setFirstName(e.target.value)}
+          <TextInputField
+            dataValue={"firstName"}
+            display={"First Name"}
+            setUser={setUser}
           />
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            onChange={(e) => setLastName(e.target.value)}
+          <TextInputField
+            dataValue={"lastName"}
+            display={"Last Name"}
+            setUser={setUser}
           />
-          <label htmlFor="emailAddress">Email Address</label>
-          <input
-            id="emailAddress"
-            name="emailAddress"
-            type="email"
-            onChange={(e) => setEmailAddress(e.target.value)}
+          <TextInputField
+            dataValue={"emailAddress"}
+            display={"Email Address"}
+            setUser={setUser}
           />
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
+          <TextInputField
+            dataValue={"password"}
+            display={"Password"}
+            setUser={setUser}
           />
           <button className="button" type="submit">
             Sign Up
