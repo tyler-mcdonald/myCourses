@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../App";
 
 const Header = () => {
+  const user = useContext(UserContext);
   return (
     <header>
       <div className="wrap header--flex">
@@ -10,7 +12,14 @@ const Header = () => {
         </h1>
         <nav>
           <ul className="header--signedin">
-            <li>#Welcome, Joe Smith!</li>
+            {user ? (
+              <li>{`Welcome, ${user.name}!`}</li>
+            ) : (
+              <li>
+                <Link to="/signup">Sign Up</Link>
+              </li>
+            )}
+
             <li>
               <Link to="/signout">Sign Out</Link>
             </li>
