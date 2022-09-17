@@ -32,13 +32,13 @@ function App() {
   const [user, setUser] = useState(null);
 
   // refactor this to look like handleSignIn
-  const handleSignUp = (firstName, lastName, emailAddress, password) => {
-    if (firstName && lastName && emailAddress && password) {
-      const user = { firstName, lastName, emailAddress, password };
-      setUser(user);
-      console.log(user);
-    }
-  };
+  // const handleSignUp = (firstName, lastName, emailAddress, password) => {
+  //   if (firstName && lastName && emailAddress && password) {
+  //     const user = { firstName, lastName, emailAddress, password };
+  //     setUser(user);
+  //     console.log(user);
+  //   }
+  // };
 
   const handleSignIn = (user) => {
     setUser(user);
@@ -59,7 +59,7 @@ function App() {
             <Route exact path="/courses/create" element={<CreateCourse />} />
             <Route path="/courses/:id" element={<CourseDetail />} />
             <Route path="/courses/:id/update" element={<UpdateCourse />} />
-            <Route path="/signup" element={<SignUp signUp={handleSignUp} />} />
+            <Route path="/signup" element={<SignUp signIn={handleSignIn} />} />
             <Route path="/signin" element={<SignIn signIn={handleSignIn} />} />
             <Route path="/signout" element={<Navigate replace to="/" />} />
           </Routes>

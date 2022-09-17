@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ValidationErrors from "./ValidationErrors";
 
-const SignUp = ({ signUp }) => {
+const SignUp = ({ signIn }) => {
   const [errors, setErrors] = useState([]); // do we need state for this?
   const [firstName, setFirstName] = useState(); // refactor these into a single user state?
   const [lastName, setLastName] = useState();
@@ -26,7 +26,7 @@ const SignUp = ({ signUp }) => {
       })
       .then((response) => {
         if (response.status === 201) {
-          signUp(firstName, lastName, emailAddress, password);
+          signIn({ firstName, lastName, emailAddress });
           console.log("New user successfully created!");
           navigate("/");
         }
