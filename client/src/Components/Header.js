@@ -6,7 +6,7 @@ const Header = () => {
     <header>
       <div className="wrap header--flex">
         <h1 className="header--logo">
-          <Link to="/">#Title</Link>
+          <Link to="/">Courses</Link>
         </h1>
         <nav>
           <ul className="header--signedin">

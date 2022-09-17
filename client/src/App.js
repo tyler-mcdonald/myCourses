@@ -21,7 +21,6 @@ function App() {
   return (
     <Router>
       <Head />
-      {/* <body> */}
       <div id="root">
         <Header />
         <Routes>
@@ -34,7 +33,6 @@ function App() {
           <Route path="/signout" element={<Navigate replace to="/" />} />
         </Routes>
       </div>
-      {/* </body> */}
     </Router>
   );
 }
