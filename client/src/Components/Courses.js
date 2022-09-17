@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../App";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
+  const user = useContext(UserContext);
+  console.log(user);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/courses")
