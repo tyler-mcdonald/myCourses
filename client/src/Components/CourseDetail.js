@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+/** Components */
+import { ActionsBar } from "./ActionsBar";
 /** Helpers */
 import { convertStringToArray } from "../helpers/convertStringToArray";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
   const [courseOwner, setCourseOwner] = useState({});
-  const [materialsNeeded, setMaterialsNeeded] = useState([]);
   const location = useLocation();
   const courseId = location.pathname.split("/")[2];
   const navigate = useNavigate();
 
-  // get course data
   useEffect(() => {
     getCourseData();
   }, []);
@@ -23,7 +23,6 @@ const CourseDetail = () => {
       .then((data) => {
         setCourse(data);
         setCourseOwner(data.User);
-        setMaterialsNeeded(convertStringToArray(data));
       });
   };
 
@@ -47,19 +46,7 @@ const CourseDetail = () => {
 
   return (
     <main>
-      <div className="actions--bar">
-        <div className="wrap">
-          <Link className="button" to={`/courses/${courseId}/update`}>
-            Update Course
-          </Link>
-          <Link className="button" onClick={() => handleDelete()}>
-            Delete Course
-          </Link>
-          <Link className="button button-secondary" to="/">
-            Return to List
-          </Link>
-        </div>
-      </div>
+      <ActionsBar courseId={courseId} handleDelete={handleDelete} />
 
       <div className="wrap">
         <h2>Course Detail</h2>
@@ -71,8 +58,6 @@ const CourseDetail = () => {
               <p>{`${courseOwner.firstName} ${courseOwner.lastName}`}</p>
 
               <p>{course.description}</p>
-
-              <p>#another paragraph as needed</p>
             </div>
             <div>
               <h3 className="course--detail--title">Estimated Time</h3>
@@ -80,9 +65,11 @@ const CourseDetail = () => {
 
               <h3 className="course--detail--title">Materials Needed</h3>
               <ul className="course--detail--list">
-                {materialsNeeded.map((material, index) => (
-                  <li key={index}>{material}</li>
-                ))}
+                {convertStringToArray(course.materialsNeeded).map(
+                  (material, index) => (
+                    <li key={index}>{material}</li>
+                  )
+                )}
               </ul>
             </div>
           </div>
