@@ -6,7 +6,7 @@ export const TextArea = ({ dataValue, display, setState, type, value }) => {
         id={dataValue}
         name={dataValue}
         type={type}
-        value={value}
+        value={value ? value : ""}
         onChange={(e) =>
           setState((prevState) => {
             return {
