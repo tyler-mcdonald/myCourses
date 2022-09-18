@@ -1,7 +1,7 @@
 /**
- * Takes a string representing a list and splits the list into an array.
- * @param {object} data - the data object
- * @returns
+ * Takes a list and splits the list into an array.
+ * @param {string} string a string containing a list separated by `*` or `,`
+ * @returns {array} array
  */
 export const convertStringToArray = (string) => {
   if (!string) return [];
