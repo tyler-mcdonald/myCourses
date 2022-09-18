@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-/** Components */
 import { ActionsBar } from "./ActionsBar";
-/** Helpers */
+// helpers
 import { convertStringToArray } from "../helpers/convertStringToArray";
 
 const CourseDetail = () => {
