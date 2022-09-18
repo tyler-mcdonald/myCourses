@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 import ValidationErrors from "./ValidationErrors";
+import { Input } from "./Input";
+import { SubmitButton } from "./SubmitButton";
+import { CancelButton } from "./CancelButton";
 
 const SignIn = ({ signIn }) => {
+  const [user, setUser] = useState({});
   const [errors, setErrors] = useState([]);
-  const [emailAddress, setEmailAddress] = useState();
-  const [password, setPassword] = useState();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -18,8 +21,8 @@ const SignIn = ({ signIn }) => {
     axios
       .get("http://localhost:5000/api/users", {
         auth: {
-          username: emailAddress,
-          password,
+          username: user.emailAddress,
+          password: user.password,
         },
       })
       .then((response) => {
@@ -42,30 +45,19 @@ const SignIn = ({ signIn }) => {
         <h2>Sign In</h2>
         <ValidationErrors errors={errors} />
         <form onSubmit={(e) => handleSubmit(e)}>
-          <label htmlFor="emailAddress">Email Address</label>
-          <input
-            id="emailAddress"
-            name="emailAddress"
-            type="email"
-            onChange={(e) => {
-              setEmailAddress(e.target.value);
-            }}
+          <Input
+            dataValue={"emailAddress"}
+            display={"Email Address"}
+            setUser={setUser}
           />
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
+          <Input
+            dataValue={"password"}
+            display={"Password"}
+            setUser={setUser}
+            type={"password"}
           />
-          <button className="button" type="submit">
-            Sign In
-          </button>
-          <Link className="button button-secondary" to="/">
-            Cancel
-          </Link>
+          <SubmitButton display={"Sign In"} />
+          <CancelButton />
         </form>
         <p>
           Don't have a user account? Click here to

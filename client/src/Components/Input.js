@@ -1,11 +1,11 @@
-export const Input = ({ dataValue, display, setUser }) => {
+export const Input = ({ dataValue, display, setUser, type }) => {
   return (
     <>
       <label htmlFor={dataValue}>{display}</label>
       <input
         id={dataValue}
         name={dataValue}
-        type="text"
+        type={type}
         onChange={(e) =>
           setUser((prevState) => {
             return {
@@ -17,4 +17,8 @@ export const Input = ({ dataValue, display, setUser }) => {
       />
     </>
   );
+};
+
+Input.defaultProps = {
+  type: "text",
 };

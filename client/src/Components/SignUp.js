@@ -1,8 +1,7 @@
-/** Dependencies */
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-/** Components */
+
 import ValidationErrors from "./ValidationErrors";
 import { Input } from "./Input";
 import { SubmitButton } from "./SubmitButton";
@@ -63,6 +62,7 @@ const SignUp = ({ signIn }) => {
           <Input
             dataValue={"password"}
             display={"Password"}
+            type={"password"}
             setUser={setUser}
           />
           <SubmitButton display={"Sign Up"} />
