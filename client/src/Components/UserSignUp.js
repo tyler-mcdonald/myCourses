@@ -48,22 +48,26 @@ const UserSignUp = ({ signIn }) => {
             dataValue={"firstName"}
             display={"First Name"}
             setState={setUser}
+            value={user.firstName}
           />
           <Input
             dataValue={"lastName"}
             display={"Last Name"}
             setState={setUser}
+            value={user.lastName}
           />
           <Input
             dataValue={"emailAddress"}
             display={"Email Address"}
             setState={setUser}
+            value={user.emailAddress}
           />
           <Input
             dataValue={"password"}
             display={"Password"}
             type={"password"}
             setState={setUser}
+            value={user.password}
           />
           <SubmitButton display={"Sign Up"} />
           <CancelButton />
