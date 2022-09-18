@@ -1,3 +1,6 @@
+## Fixes
+[] Submit button needs to be dynamic for all pages
+
 ## Improve existing functionality
 [] Get paragraphs to work in CourseDetail. Currently they morph into a giant paragraph after creating a course.
 [] In CourseDetails, update the string helper function to accept other separators ( , ; )
@@ -21,6 +24,7 @@
 [] refactor createCourse inputs without refs
 [] modularize functions in App.js?
 [] refactor post requests
+[] Why do we need a separate state for courseUser? Seems like another async operation on top of retreiving the course?
 
 ## User Authentication
 [] email authentication for user signup
