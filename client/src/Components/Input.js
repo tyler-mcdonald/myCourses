@@ -1,4 +1,4 @@
-export const Input = ({ dataValue, display, setState, type }) => {
+export const Input = ({ dataValue, display, setState, type, value }) => {
   return (
     <>
       <label htmlFor={dataValue}>{display}</label>
@@ -6,6 +6,7 @@ export const Input = ({ dataValue, display, setState, type }) => {
         id={dataValue}
         name={dataValue}
         type={type}
+        value={value || ""} // prevent controlled component error
         onChange={(e) =>
           setState((prevState) => {
             return {
