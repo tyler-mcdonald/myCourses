@@ -49,12 +49,14 @@ const UserSignIn = ({ signIn }) => {
             dataValue={"emailAddress"}
             display={"Email Address"}
             setState={setUser}
+            value={user.emailAddress}
           />
           <Input
             dataValue={"password"}
             display={"Password"}
             setState={setUser}
             type={"password"}
+            value={user.password}
           />
           <SubmitButton display={"Sign In"} />
           <CancelButton />
