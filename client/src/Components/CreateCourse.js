@@ -1,21 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ValidationErrors from "./ValidationErrors";
+import { Input } from "./Input";
+import { TextArea } from "./TextArea";
 
 const CreateCourse = () => {
-  /** State */
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [estimatedTime, setEstimatedTime] = useState("");
-  const [materialsNeeded, setMaterialsNeeded] = useState("");
+  const [course, setCourse] = useState({});
   const [errors, setErrors] = useState([]);
-  /** Refs */
-  const titleInputRef = useRef("");
-  const descriptionInputRef = useRef("");
-  const estimatedTimeInputRef = useRef("");
-  const materialsNeededInputRef = useRef("");
-  /** Other */
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -24,10 +16,10 @@ const CreateCourse = () => {
       .post(
         "http://localhost:5000/api/courses",
         {
-          title,
-          description,
-          estimatedTime,
-          materialsNeeded,
+          title: course.courseTitle,
+          description: course.courseDescription,
+          estimatedTime: course.estimatedTime,
+          materialsNeeded: course.materialsNeeded,
           userId: 1,
         },
         {
@@ -54,47 +46,31 @@ const CreateCourse = () => {
         <form>
           <div className="main--flex">
             <div>
-              <label htmlFor="courseTitle">Course Title</label>
-              <input
-                id="courseTitle"
-                name="courseTitle"
-                type="text"
-                ref={titleInputRef}
-                onChange={() => setTitle(titleInputRef.current.value)}
+              <Input
+                dataValue={"courseTitle"}
+                display={"Course Title"}
+                setState={setCourse}
               />
 
               <p>By #user.name</p>
 
-              <label htmlFor="courseDescription">Course Description</label>
-              <textarea
-                id="courseDescription"
-                name="courseDescription"
-                ref={descriptionInputRef}
-                onChange={() =>
-                  setDescription(descriptionInputRef.current.value)
-                }
-              ></textarea>
+              <TextArea
+                dataValue={"courseDescription"}
+                display={"Course Description"}
+                setState={setCourse}
+              />
             </div>
             <div>
-              <label htmlFor="estimatedTime">Estimated Time</label>
-              <input
-                id="estimatedTime"
-                name="estimatedTime"
-                type="text"
-                ref={estimatedTimeInputRef}
-                onChange={() =>
-                  setEstimatedTime(estimatedTimeInputRef.current.value)
-                }
+              <Input
+                dataValue={"estimatedTime"}
+                display={"Estimated Time"}
+                setState={setCourse}
               />
 
-              <label htmlFor="materialsNeeded">Materials Needed</label>
-              <textarea
-                id="materialsNeeded"
-                name="materialsNeeded"
-                ref={materialsNeededInputRef}
-                onChange={() =>
-                  setMaterialsNeeded(materialsNeededInputRef.current.value)
-                }
+              <TextArea
+                dataValue={"materialsNeeded"}
+                display={"Materials Needed"}
+                setState={setCourse}
               />
             </div>
           </div>
