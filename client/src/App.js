@@ -7,15 +7,15 @@ import {
   Navigate,
 } from "react-router-dom";
 /** Components */
-import Head from "./Components/Head";
-import Header from "./Components/Header";
-import CourseDetail from "./Components/CourseDetail";
-import Courses from "./Components/Courses";
-import UpdateCourse from "./Components/UpdateCourse";
-// import SignOut from "./Components/SignOut";
-import UserSignIn from "./Components/UserSignIn";
-import UserSignUp from "./Components/UserSignUp";
-import CreateCourse from "./Components/CreateCourse";
+import Head from "./components/Head";
+import Header from "./components/Header";
+import CourseDetail from "./components/CourseDetail";
+import Courses from "./components/Courses";
+import UpdateCourse from "./components/UpdateCourse";
+// import SignOut from "./components/SignOut";
+import UserSignIn from "./components/UserSignIn";
+import UserSignUp from "./components/UserSignUp";
+import CreateCourse from "./components/CreateCourse";
 
 export const UserContext = createContext();
 
