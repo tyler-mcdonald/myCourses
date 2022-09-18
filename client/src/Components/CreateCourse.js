@@ -1,12 +1,9 @@
 import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../App";
 import { ValidationErrors } from "./ValidationErrors";
-import { Input } from "./Input";
-import { TextArea } from "./TextArea";
-import { SubmitButton } from "./SubmitButton";
-import { CancelButton } from "./CancelButton";
+import { CourseInfoForm } from "./CourseInfoForm";
 
 const CreateCourse = () => {
   const [course, setCourse] = useState({});
@@ -16,16 +13,11 @@ const CreateCourse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { title, description, estimatedTime, materialsNeeded } = course;
     axios
       .post(
         "http://localhost:5000/api/courses",
-        {
-          title: course.courseTitle,
-          description: course.courseDescription,
-          estimatedTime: course.estimatedTime,
-          materialsNeeded: course.materialsNeeded,
-          userId: 1,
-        },
+        { title, description, estimatedTime, materialsNeeded, userId: 1 },
         {
           auth: {
             username: "joe@smith.com",
@@ -47,44 +39,12 @@ const CreateCourse = () => {
       <div className="wrap">
         <h2>Create Course</h2>
         <ValidationErrors errors={errors} />
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="main--flex">
-            <div>
-              <Input
-                dataValue={"courseTitle"}
-                display={"Course Title"}
-                setState={setCourse}
-                value={course.title}
-              />
-
-              <p>
-                Instructor:{" "}
-                {user ? `${user.firstName} ${user.lastName}` : "USER"}
-              </p>
-
-              <TextArea
-                dataValue={"courseDescription"}
-                display={"Course Description"}
-                setState={setCourse}
-              />
-            </div>
-            <div>
-              <Input
-                dataValue={"estimatedTime"}
-                display={"Estimated Time"}
-                setState={setCourse}
-              />
-
-              <TextArea
-                dataValue={"materialsNeeded"}
-                display={"Materials Needed"}
-                setState={setCourse}
-              />
-            </div>
-          </div>
-          <SubmitButton display={"Create Course"} />
-          <CancelButton />
-        </form>
+        <CourseInfoForm
+          handleSubmit={handleSubmit}
+          setCourse={setCourse}
+          course={course}
+          user={user}
+        />
       </div>
     </main>
   );
