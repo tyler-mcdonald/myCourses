@@ -47,23 +47,23 @@ const SignUp = ({ signIn }) => {
           <Input
             dataValue={"firstName"}
             display={"First Name"}
-            setUser={setUser}
+            setState={setUser}
           />
           <Input
             dataValue={"lastName"}
             display={"Last Name"}
-            setUser={setUser}
+            setState={setUser}
           />
           <Input
             dataValue={"emailAddress"}
             display={"Email Address"}
-            setUser={setUser}
+            setState={setUser}
           />
           <Input
             dataValue={"password"}
             display={"Password"}
             type={"password"}
-            setUser={setUser}
+            setState={setUser}
           />
           <SubmitButton display={"Sign Up"} />
           <CancelButton />

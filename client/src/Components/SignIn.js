@@ -48,12 +48,12 @@ const SignIn = ({ signIn }) => {
           <Input
             dataValue={"emailAddress"}
             display={"Email Address"}
-            setUser={setUser}
+            setState={setUser}
           />
           <Input
             dataValue={"password"}
             display={"Password"}
-            setUser={setUser}
+            setState={setUser}
             type={"password"}
           />
           <SubmitButton display={"Sign In"} />

@@ -1,4 +1,4 @@
-export const Input = ({ dataValue, display, setUser, type }) => {
+export const Input = ({ dataValue, display, setState, type }) => {
   return (
     <>
       <label htmlFor={dataValue}>{display}</label>
@@ -7,7 +7,7 @@ export const Input = ({ dataValue, display, setUser, type }) => {
         name={dataValue}
         type={type}
         onChange={(e) =>
-          setUser((prevState) => {
+          setState((prevState) => {
             return {
               ...prevState,
               [dataValue]: e.target.value,
