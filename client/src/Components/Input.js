@@ -6,7 +6,7 @@ export const Input = ({ dataValue, display, setState, type, value }) => {
         id={dataValue}
         name={dataValue}
         type={type}
-        value={value || ""} // prevent controlled component error
+        value={value} // prevent controlled component error
         onChange={(e) =>
           setState((prevState) => {
             return {
@@ -22,4 +22,5 @@ export const Input = ({ dataValue, display, setState, type, value }) => {
 
 Input.defaultProps = {
   type: "text",
+  // value: "",
 };
