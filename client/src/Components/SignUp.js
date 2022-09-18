@@ -1,8 +1,12 @@
+/** Dependencies */
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+/** Components */
 import ValidationErrors from "./ValidationErrors";
-import { TextInputField } from "./TextInputField";
+import { Input } from "./Input";
+import { SubmitButton } from "./SubmitButton";
+import { CancelButton } from "./CancelButton";
 
 const SignUp = ({ signIn }) => {
   const [user, setUser] = useState({});
@@ -25,7 +29,6 @@ const SignUp = ({ signIn }) => {
       .then((response) => {
         if (response.status === 201) {
           signIn(user);
-          console.log("New user successfully created!");
           navigate("/");
         }
       })
@@ -42,32 +45,28 @@ const SignUp = ({ signIn }) => {
         <h2>Sign Up</h2>
         <ValidationErrors errors={errors} />
         <form onSubmit={(e) => handleSubmit(e)}>
-          <TextInputField
+          <Input
             dataValue={"firstName"}
             display={"First Name"}
             setUser={setUser}
           />
-          <TextInputField
+          <Input
             dataValue={"lastName"}
             display={"Last Name"}
             setUser={setUser}
           />
-          <TextInputField
+          <Input
             dataValue={"emailAddress"}
             display={"Email Address"}
             setUser={setUser}
           />
-          <TextInputField
+          <Input
             dataValue={"password"}
             display={"Password"}
             setUser={setUser}
           />
-          <button className="button" type="submit">
-            Sign Up
-          </button>
-          <Link className="button button-secondary" to="/">
-            Cancel
-          </Link>
+          <SubmitButton display={"Sign Up"} />
+          <CancelButton />
         </form>
         <p>
           Already have a user account? Click here to
