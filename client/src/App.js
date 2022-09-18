@@ -13,8 +13,8 @@ import CourseDetail from "./Components/CourseDetail";
 import Courses from "./Components/Courses";
 import UpdateCourse from "./Components/UpdateCourse";
 // import SignOut from "./Components/SignOut";
-import SignIn from "./Components/SignIn";
-import SignUp from "./Components/SignUp";
+import UserSignIn from "./Components/UserSignIn";
+import UserSignUp from "./Components/UserSignUp";
 import CreateCourse from "./Components/CreateCourse";
 
 export const UserContext = createContext();
@@ -59,8 +59,14 @@ function App() {
             <Route exact path="/courses/create" element={<CreateCourse />} />
             <Route path="/courses/:id" element={<CourseDetail />} />
             <Route path="/courses/:id/update" element={<UpdateCourse />} />
-            <Route path="/signup" element={<SignUp signIn={handleSignIn} />} />
-            <Route path="/signin" element={<SignIn signIn={handleSignIn} />} />
+            <Route
+              path="/signup"
+              element={<UserSignUp signIn={handleSignIn} />}
+            />
+            <Route
+              path="/signin"
+              element={<UserSignIn signIn={handleSignIn} />}
+            />
             <Route path="/signout" element={<Navigate replace to="/" />} />
           </Routes>
         </UserContext.Provider>

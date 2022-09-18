@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -7,44 +7,53 @@ import { Input } from "./Input";
 import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";
 
-const SignIn = ({ signIn }) => {
+const UserSignUp = ({ signIn }) => {
   const [user, setUser] = useState({});
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState([]); // do we need state for this?
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getUser();
+    createUser();
   };
 
-  const getUser = async () => {
+  const createUser = () => {
     axios
-      .get("http://localhost:5000/api/users", {
-        auth: {
-          username: user.emailAddress,
-          password: user.password,
-        },
+      .post("http://localhost:5000/api/users", {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        emailAddress: user.emailAddress,
+        password: user.password,
       })
       .then((response) => {
-        if (response.status === 200) {
-          signIn(response.data);
+        if (response.status === 201) {
+          signIn(user);
           navigate("/");
         }
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.status === 401) {
-          setErrors(["Email and/or password is incorrect"]);
-        }
+        const validationErrors = err.response.data.errors;
+        if (validationErrors) setErrors(validationErrors);
       });
   };
 
   return (
     <main>
       <div className="form--centered">
-        <h2>Sign In</h2>
+        <h2>Sign Up</h2>
         <ValidationErrors errors={errors} />
         <form onSubmit={(e) => handleSubmit(e)}>
+          <Input
+            dataValue={"firstName"}
+            display={"First Name"}
+            setState={setUser}
+          />
+          <Input
+            dataValue={"lastName"}
+            display={"Last Name"}
+            setState={setUser}
+          />
           <Input
             dataValue={"emailAddress"}
             display={"Email Address"}
@@ -53,19 +62,19 @@ const SignIn = ({ signIn }) => {
           <Input
             dataValue={"password"}
             display={"Password"}
-            setState={setUser}
             type={"password"}
+            setState={setUser}
           />
-          <SubmitButton display={"Sign In"} />
+          <SubmitButton display={"Sign Up"} />
           <CancelButton />
         </form>
         <p>
-          Don't have a user account? Click here to
-          <Link to="/signup"> sign up</Link>!
+          Already have a user account? Click here to
+          <Link to="/signin"> sign in</Link>!
         </p>
       </div>
     </main>
   );
 };
 
-export default SignIn;
+export default UserSignUp;
