@@ -33,14 +33,16 @@ function App() {
           <Header signOut={handleSignOut} />
           <Routes>
             <Route exact path="/" element={<Courses />} />
-            <Route exact path="/courses/create" element={<CreateCourse />} />
-
             <Route
-              path="/courses/:id"
-              element={<PrivateRoute Component={CourseDetail} />}
+              exact
+              path="/courses/create"
+              element={<PrivateRoute Component={CreateCourse} />}
             />
-
-            <Route path="/courses/:id/update" element={<UpdateCourse />} />
+            <Route path="/courses/:id" element={<CourseDetail />} />
+            <Route
+              path="/courses/:id/update"
+              element={<PrivateRoute Component={UpdateCourse} />}
+            />
             <Route
               path="/signup"
               element={<UserSignUp signIn={handleSignIn} />}
