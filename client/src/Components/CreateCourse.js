@@ -5,6 +5,8 @@ import { UserContext } from "../App";
 import { ValidationErrors } from "./ValidationErrors";
 import { Input } from "./Input";
 import { TextArea } from "./TextArea";
+import { SubmitButton } from "./SubmitButton";
+import { CancelButton } from "./CancelButton";
 
 const CreateCourse = () => {
   const [course, setCourse] = useState({});
@@ -45,13 +47,14 @@ const CreateCourse = () => {
       <div className="wrap">
         <h2>Create Course</h2>
         <ValidationErrors errors={errors} />
-        <form>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <div className="main--flex">
             <div>
               <Input
                 dataValue={"courseTitle"}
                 display={"Course Title"}
                 setState={setCourse}
+                value={course.title}
               />
 
               <p>
@@ -79,16 +82,8 @@ const CreateCourse = () => {
               />
             </div>
           </div>
-          <button
-            className="button"
-            type="submit"
-            onClick={(e) => handleSubmit(e)}
-          >
-            Create Course
-          </button>
-          <Link className="button button-secondary" to={`/`}>
-            Cancel
-          </Link>
+          <SubmitButton display={"Create Course"} />
+          <CancelButton />
         </form>
       </div>
     </main>
