@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import ValidationErrors from "./ValidationErrors";
+import { UserContext } from "../App";
+import { ValidationErrors } from "./ValidationErrors";
 import { Input } from "./Input";
 import { TextArea } from "./TextArea";
 
@@ -9,6 +10,7 @@ const CreateCourse = () => {
   const [course, setCourse] = useState({});
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const user = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,7 +54,10 @@ const CreateCourse = () => {
                 setState={setCourse}
               />
 
-              <p>By #user.name</p>
+              <p>
+                Instructor:{" "}
+                {user ? `${user.firstName} ${user.lastName}` : "USER"}
+              </p>
 
               <TextArea
                 dataValue={"courseDescription"}
