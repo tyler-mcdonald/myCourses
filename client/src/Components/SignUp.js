@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import ValidationErrors from "./ValidationErrors";
+import { ValidationErrors } from "./ValidationErrors";
 import { Input } from "./Input";
 import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";

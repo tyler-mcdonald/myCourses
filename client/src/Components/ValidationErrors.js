@@ -1,4 +1,4 @@
-const ValidationErrors = ({ errors }) => {
+export const ValidationErrors = ({ errors }) => {
   if (errors.length > 0) {
     return (
       <div className="validation--errors">
@@ -12,5 +12,3 @@ const ValidationErrors = ({ errors }) => {
     );
   }
 };
-
-export default ValidationErrors;
