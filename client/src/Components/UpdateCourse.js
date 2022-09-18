@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ValidationErrors } from "./ValidationErrors";
-import { Input } from "./Input";
-import { TextArea } from "./TextArea";
-import { SubmitButton } from "./SubmitButton";
-import { CancelButton } from "./CancelButton";
+// import { Input } from "./Input";
+// import { TextArea } from "./TextArea";
+// import { SubmitButton } from "./SubmitButton";
+// import { CancelButton } from "./CancelButton";
+import { CourseInfoForm } from "./CourseInfoForm";
 
 const UpdateCourse = () => {
   const [course, setCourse] = useState({});
@@ -68,45 +69,12 @@ const UpdateCourse = () => {
       <div className="wrap">
         <h2>Update Course</h2>
         <ValidationErrors errors={errors} />
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="main--flex">
-            <div>
-              <Input
-                dataValue={"title"}
-                display={"Course Title"}
-                setState={setCourse}
-                value={course.title || ""}
-              />
-
-              <p>
-                Instructor: {`${courseOwner.firstName} ${courseOwner.lastName}`}
-              </p>
-
-              <TextArea
-                dataValue={"description"}
-                display={"Course Description"}
-                setState={setCourse}
-                value={course.description || ""}
-              />
-            </div>
-            <div>
-              <Input
-                dataValue={"estimatedTime"}
-                display={"Estimated Time"}
-                setState={setCourse}
-                value={course.estimatedTime || ""}
-              />
-              <TextArea
-                dataValue={"materialsNeeded"}
-                display={"Materials Needed"}
-                setState={setCourse}
-                value={course.materialsNeeded || ""}
-              />
-            </div>
-          </div>
-          <SubmitButton display={"Update Course"} />
-          <CancelButton route={`/courses/${courseId}`} />
-        </form>
+        <CourseInfoForm
+          handleSubmit={handleSubmit}
+          setCourse={setCourse}
+          course={course}
+          user={courseOwner}
+        />
       </div>
     </main>
   );
