@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import ValidationErrors from "./ValidationErrors";
+import { ValidationErrors } from "./ValidationErrors";
+import { Input } from "./Input";
+import { TextArea } from "./TextArea";
+import { SubmitButton } from "./SubmitButton";
+import { CancelButton } from "./CancelButton";
 
-/** Refactor this to useContext */
 const UpdateCourse = () => {
-  /** State */
   const [course, setCourse] = useState({});
   const [courseOwner, setCourseOwner] = useState({});
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [estimatedTime, setEstimatedTime] = useState("");
-  const [materialsNeeded, setMaterialsNeeded] = useState("");
   const [errors, setErrors] = useState([]);
-  /** Misc */
   const location = useLocation();
   const courseId = location.pathname.split("/")[2];
   const navigate = useNavigate();
@@ -31,27 +28,16 @@ const UpdateCourse = () => {
     fetchData();
   }, [courseId]);
 
-  // set default values
-  useEffect(() => {
-    async function setDefaultValues() {
-      setTitle(await course.title);
-      setDescription(await course.description);
-      setEstimatedTime(await course.estimatedTime);
-      setMaterialsNeeded(await course.materialsNeeded);
-    }
-    setDefaultValues();
-  }, [course]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .put(
         `http://localhost:5000/api/courses/${courseId}`,
         {
-          title,
-          description,
-          estimatedTime,
-          materialsNeeded,
+          title: course.title,
+          description: course.description,
+          estimatedTime: course.estimatedTime,
+          materialsNeeded: course.materialsNeeded,
           userId: 1,
         },
         {
@@ -77,17 +63,6 @@ const UpdateCourse = () => {
       });
   };
 
-  // refactor to switch case?
-  const handleChange = (e) => {
-    const inputField = e.target.id;
-    if (inputField === "courseTitle") return setTitle(e.target.value);
-    if (inputField === "courseDescription")
-      return setDescription(e.target.value);
-    if (inputField === "estimatedTime") return setEstimatedTime(e.target.value);
-    if (inputField === "materialsNeeded")
-      return setMaterialsNeeded(e.target.value);
-  };
-
   return (
     <main>
       <div className="wrap">
@@ -96,52 +71,41 @@ const UpdateCourse = () => {
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="main--flex">
             <div>
-              <label htmlFor="courseTitle">Course Title</label>
-              <input
-                id="courseTitle"
-                name="courseTitle"
-                type="text"
-                value={title || ""}
-                onChange={(e) => handleChange(e)} // how to make this work better?
+              <Input
+                dataValue={"title"}
+                display={"Course Title"}
+                setState={setCourse}
+                value={course.title}
               />
 
               <p>
                 Instructor: {`${courseOwner.firstName} ${courseOwner.lastName}`}
               </p>
 
-              <label htmlFor="courseDescription">Course Description</label>
-              <textarea
-                id="courseDescription"
-                name="courseDescription"
-                value={description || ""}
-                onChange={(e) => handleChange(e)}
-              ></textarea>
+              <TextArea
+                dataValue={"description"}
+                display={"Course Description"}
+                setState={setCourse}
+                value={course.description}
+              />
             </div>
             <div>
-              <label htmlFor="estimatedTime">Estimated Time</label>
-              <input
-                id="estimatedTime"
-                name="estimatedTime"
-                type="text"
-                value={estimatedTime || ""}
-                onChange={(e) => handleChange(e)}
+              <Input
+                dataValue={"estimatedTime"}
+                display={"Estimated Time"}
+                setState={setCourse}
+                value={course.estimatedTime}
               />
-
-              <label htmlFor="materialsNeeded">Materials Needed</label>
-              <textarea
-                id="materialsNeeded"
-                name="materialsNeeded"
-                value={materialsNeeded || ""}
-                onChange={(e) => handleChange(e)}
-              ></textarea>
+              <TextArea
+                dataValue={"materialsNeeded"}
+                display={"Materials Needed"}
+                setState={setCourse}
+                value={course.materialsNeeded}
+              />
             </div>
           </div>
-          <button className="button" type="submit">
-            Update Course
-          </button>
-          <Link className="button button-secondary" to={`/courses/${courseId}`}>
-            Cancel
-          </Link>
+          <SubmitButton display={"Update Course"} />
+          <CancelButton route={`/courses/${courseId}`} />
         </form>
       </div>
     </main>
