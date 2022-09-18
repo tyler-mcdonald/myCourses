@@ -75,7 +75,7 @@ const UpdateCourse = () => {
                 dataValue={"title"}
                 display={"Course Title"}
                 setState={setCourse}
-                value={course.title}
+                value={course.title || ""}
               />
 
               <p>
@@ -86,7 +86,7 @@ const UpdateCourse = () => {
                 dataValue={"description"}
                 display={"Course Description"}
                 setState={setCourse}
-                value={course.description}
+                value={course.description || ""}
               />
             </div>
             <div>
@@ -94,13 +94,13 @@ const UpdateCourse = () => {
                 dataValue={"estimatedTime"}
                 display={"Estimated Time"}
                 setState={setCourse}
-                value={course.estimatedTime}
+                value={course.estimatedTime || ""}
               />
               <TextArea
                 dataValue={"materialsNeeded"}
                 display={"Materials Needed"}
                 setState={setCourse}
-                value={course.materialsNeeded}
+                value={course.materialsNeeded || ""}
               />
             </div>
           </div>
