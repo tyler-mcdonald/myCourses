@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
 import { ActionsBar } from "./ActionsBar";
 // helpers
-import { convertStringToArray } from "../helpers/convertStringToArray";
+// import { convertStringToArray } from "../helpers/convertStringToArray";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
@@ -57,22 +58,14 @@ const CourseDetail = () => {
             <div>
               <h3 className="course--detail--title">Course</h3>
               <h4 className="course--name">{course.title}</h4>
-              <p>{`${courseOwner.firstName} ${courseOwner.lastName}`}</p>
-
-              <p>{course.description}</p>
+              <p>{`Instructor: ${courseOwner.firstName} ${courseOwner.lastName}`}</p>
+              <ReactMarkdown>{course.description}</ReactMarkdown>
             </div>
             <div>
               <h3 className="course--detail--title">Estimated Time</h3>
               <p>{course.estimatedTime}</p>
-
               <h3 className="course--detail--title">Materials Needed</h3>
-              <ul className="course--detail--list">
-                {convertStringToArray(course.materialsNeeded).map(
-                  (material, index) => (
-                    <li key={index}>{material}</li>
-                  )
-                )}
-              </ul>
+              <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
             </div>
           </div>
         </form>
