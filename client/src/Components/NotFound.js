@@ -1,8 +1,11 @@
+import { CancelButton } from "./CancelButton";
+
 export const NotFound = () => {
   return (
     <>
       <h2>Page Not Found</h2>
-      <p>Sorry, the page you requested does not exist.</p>
+      <p>The page you requested does not exist.</p>
+      <CancelButton route={"/"} display={"Home"} />
     </>
   );
 };
