@@ -4,6 +4,7 @@ import axios from "axios";
 import { UserContext } from "../App";
 import { ValidationErrors } from "./ValidationErrors";
 import { CourseInfoForm } from "./CourseInfoForm";
+import { handleErrors } from "../helpers/handleErrors";
 
 const UpdateCourse = () => {
   const [course, setCourse] = useState({});
@@ -13,6 +14,23 @@ const UpdateCourse = () => {
   const courseId = location.pathname.split("/")[2]; // use params instead
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetchCourseData(`http://localhost:5000/api/courses/${courseId}`);
+  }, [courseId]);
+
+  const fetchCourseData = async (url) => {
+    try {
+      const response = await axios.get(url);
+      const data = await response.data;
+      setCourse(response.data);
+      const isVerified = verifyCourseOwner(data.User);
+      redirectIfForbidden(isVerified);
+    } catch (err) {
+      const handled = handleErrors(err);
+      navigate(handled.route);
+    }
+  };
+
   // check if current loggeed in user is the course owner
   const verifyCourseOwner = (owner) => user.emailAddress === owner.emailAddress;
 
@@ -20,53 +38,26 @@ const UpdateCourse = () => {
     if (!verified) return navigate("/forbidden");
   };
 
-  // get course data -- refactor
-  useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get(
-        `http://localhost:5000/api/courses/${courseId}`
-      );
-      const data = await response.data;
-      setCourse(data);
-      const isVerified = verifyCourseOwner(data.User);
-      redirectIfForbidden(isVerified);
-    }
-    fetchData();
-  }, [courseId]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .put(
-        `http://localhost:5000/api/courses/${courseId}`,
-        {
-          title: course.title,
-          description: course.description,
-          estimatedTime: course.estimatedTime,
-          materialsNeeded: course.materialsNeeded,
-          userId: 1,
-        },
-        {
-          auth: {
-            username: user.emailAddress,
-            password: user.password,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        if (response.status === 204) {
-          return navigate(`/courses/${courseId}`);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response.status === 403) {
-          // this may not be necessary because of user auth????
-          return setErrors(() => [err.response.data.message]);
-        }
-        return setErrors(() => err.response.data.errors);
-      });
+    updateCourseData(`http://localhost:5000/api/courses/${courseId}`);
+  };
+
+  const updateCourseData = async (url) => {
+    try {
+      const { title, description, estimatedTime, materialsNeeded } = course;
+      const response = await axios.put(
+        url,
+        { title, description, estimatedTime, materialsNeeded, userId: 1 },
+        { auth: { username: user.emailAddress, password: user.password } }
+      );
+      if (response.status === 204) {
+        return navigate(`/courses/${courseId}`);
+      }
+    } catch (err) {
+      const handled = handleErrors(err);
+      setErrors(handled.messages);
+    }
   };
 
   return (
