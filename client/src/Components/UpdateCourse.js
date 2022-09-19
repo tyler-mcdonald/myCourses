@@ -74,6 +74,7 @@ const UpdateCourse = () => {
           setCourse={setCourse}
           course={course}
           user={courseOwner}
+          page="Update Course"
         />
       </div>
     </main>

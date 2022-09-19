@@ -3,7 +3,13 @@ import { TextArea } from "./TextArea";
 import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";
 
-export const CourseInfoForm = ({ handleSubmit, setCourse, course, user }) => {
+export const CourseInfoForm = ({
+  handleSubmit,
+  setCourse,
+  course,
+  user,
+  page = "Create Course",
+}) => {
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <div className="main--flex">
@@ -40,7 +46,7 @@ export const CourseInfoForm = ({ handleSubmit, setCourse, course, user }) => {
           />
         </div>
       </div>
-      <SubmitButton display={"Create Course"} />
+      <SubmitButton display={page} />
       <CancelButton />
     </form>
   );
