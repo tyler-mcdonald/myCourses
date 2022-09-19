@@ -7,7 +7,6 @@ import { CourseInfoForm } from "./CourseInfoForm";
 
 const UpdateCourse = () => {
   const [course, setCourse] = useState({});
-  const [courseOwner, setCourseOwner] = useState();
   const [errors, setErrors] = useState([]);
   const user = useContext(UserContext);
   const location = useLocation();
@@ -21,17 +20,15 @@ const UpdateCourse = () => {
     if (!verified) return navigate("/forbidden");
   };
 
-  // get course data
+  // get course data -- refactor
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
+      const response = await axios.get(
         `http://localhost:5000/api/courses/${courseId}`
       );
-      const data = await response.json();
-      const courseOwner = await data.User;
+      const data = await response.data;
       setCourse(data);
-      setCourseOwner(courseOwner);
-      const isVerified = verifyCourseOwner(courseOwner);
+      const isVerified = verifyCourseOwner(data.User);
       redirectIfForbidden(isVerified);
     }
     fetchData();
@@ -59,7 +56,7 @@ const UpdateCourse = () => {
       .then((response) => {
         console.log(response);
         if (response.status === 204) {
-          return navigate("/");
+          return navigate(`/courses/${courseId}`);
         }
       })
       .catch((err) => {
@@ -81,7 +78,7 @@ const UpdateCourse = () => {
           handleSubmit={handleSubmit}
           setCourse={setCourse}
           course={course}
-          user={courseOwner}
+          user={course.User}
           page="Update Course"
         />
       </div>
