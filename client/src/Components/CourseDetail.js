@@ -4,15 +4,13 @@ import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import { ActionsBar } from "./ActionsBar";
 import { NotFound } from "./NotFound";
-// helpers
-// import { convertStringToArray } from "../helpers/convertStringToArray";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
   const [courseOwner, setCourseOwner] = useState({});
   const navigate = useNavigate();
   const courseId = useParams().id;
-  const courseExists = Object.keys(course).length > 2; // if course object is empty or displays error message
+  const courseExists = Object.keys(course).length > 1; // Check if `course` is empty or contains only a `message` key
 
   useEffect(() => {
     const getCourseData = async () => {
