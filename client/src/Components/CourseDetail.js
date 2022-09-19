@@ -4,6 +4,7 @@ import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import { ActionsBar } from "./ActionsBar";
 import { UserContext } from "../App";
+import { handleErrors } from "../helpers/handleErrors";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
@@ -12,20 +13,20 @@ const CourseDetail = () => {
   const courseId = useParams().id;
 
   useEffect(() => {
-    const getCourseData = async () => {
+    fetchCourseData();
+  }, [courseId]);
+
+  const fetchCourseData = async () => {
+    try {
       const response = await axios.get(
         `http://localhost:5000/api/courses/${courseId}`
       );
-      handleErrors(response.status);
       const data = await response.data;
       setCourse(data);
-    };
-    getCourseData();
-  }, [courseId]);
-
-  // might move to helpers dir
-  const handleErrors = (status) => {
-    if (status === 404) return navigate("/notfound");
+    } catch (err) {
+      const handled = handleErrors(err);
+      navigate(handled.route);
+    }
   };
 
   const handleDelete = async () => {
@@ -38,8 +39,8 @@ const CourseDetail = () => {
       );
       if (response.status === 204) return navigate("/");
     } catch (err) {
-      console.log(err);
-      return navigate("/error");
+      const handled = handleErrors(err);
+      return navigate(handled.route);
     }
   };
 

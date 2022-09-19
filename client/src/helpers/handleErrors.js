@@ -1,6 +1,6 @@
 export const handleErrors = (error) => {
   const handledError = {};
-  // if (error.response.status === 500) return "/forbidden";
+  console.log(error);
   if (error.response.status === 500) {
     handledError.route = "/forbidden";
   }
