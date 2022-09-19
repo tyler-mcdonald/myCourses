@@ -6,6 +6,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import Cookies from "js-cookie";
 /** Components */
 import { PrivateRoute } from "./PrivateRoute";
 import Head from "./components/Head";
@@ -18,17 +19,32 @@ import UserSignIn from "./components/UserSignIn";
 import UserSignUp from "./components/UserSignUp";
 import CreateCourse from "./components/CreateCourse";
 import { NotFound } from "./components/NotFound";
+import { Forbidden } from "./components/Forbidden";
 
 export const UserContext = createContext();
 
 function App() {
-  const [user, setUser] = useState(null);
-  const handleSignIn = (user) => setUser(user);
-  const handleSignOut = () => setUser(null);
+  const userCookie = Cookies.get("authenticatedUser");
+  const [user, setUser] = useState(userCookie ? JSON.parse(userCookie) : null);
+
+  const handleSignIn = (user) => {
+    setUser(user);
+    Cookies.set("authenticatedUser", JSON.stringify(user));
+  };
+  const handleSignOut = () => {
+    Cookies.remove("authenticatedUser");
+    setUser(null);
+  };
+
+  /** Forbidden page */
+  // IF user is logged in AND
+  // IF user is not course owner
+  //    Redirect to /forbidden
 
   return (
     <Router>
       <Head />
+      {/* where to put this div? */}
       <div id="root">
         <UserContext.Provider value={user}>
           <Header signOut={handleSignOut} />
@@ -39,7 +55,6 @@ function App() {
               path="/courses/create"
               element={<PrivateRoute Component={CreateCourse} />}
             />
-            {/* need to handle not found ids */}
             <Route path="/courses/:id" element={<CourseDetail />} />
             <Route
               path="/courses/:id/update"
@@ -54,6 +69,7 @@ function App() {
               element={<UserSignIn signIn={handleSignIn} />}
             />
             <Route path="/signout" element={<Navigate replace to="/" />} />
+            <Route path="/forbidden" element={<Forbidden />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </UserContext.Provider>
