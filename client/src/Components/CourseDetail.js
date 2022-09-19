@@ -45,11 +45,7 @@ const CourseDetail = () => {
 
   return (
     <main>
-      <ActionsBar
-        courseId={courseId}
-        handleDelete={handleDelete}
-        courseOwner={course.User}
-      />
+      <ActionsBar handleDelete={handleDelete} course={course} />
       <div className="wrap">
         <h2>Course Detail</h2>
         <form>

@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../App";
 
-export const ActionsBar = ({ courseId, handleDelete, courseOwner }) => {
+export const ActionsBar = ({ course, handleDelete }) => {
   const user = useContext(UserContext);
 
   const userIsCourseOwner = () => {
+    const courseOwner = course.User;
     if (user && courseOwner) {
       return user.emailAddress === courseOwner.emailAddress;
     } else return false;
@@ -17,7 +18,7 @@ export const ActionsBar = ({ courseId, handleDelete, courseOwner }) => {
         {/* Display Update/Delete buttons if user is logged in */}
         {user && userIsCourseOwner() ? (
           <>
-            <Link className="button" to={`/courses/${courseId}/update`}>
+            <Link className="button" to={`/courses/${course.id}/update`}>
               Update Course
             </Link>
             <Link className="button" onClick={() => handleDelete()}>
