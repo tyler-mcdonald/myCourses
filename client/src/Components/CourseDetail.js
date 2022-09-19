@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import { ActionsBar } from "./ActionsBar";
@@ -10,9 +10,8 @@ import { ActionsBar } from "./ActionsBar";
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
   const [courseOwner, setCourseOwner] = useState({});
-  const location = useLocation();
-  const courseId = location.pathname.split("/")[2]; //  useParams instead
   const navigate = useNavigate();
+  const courseId = useParams().id;
 
   useEffect(() => {
     const getCourseData = async () => {
