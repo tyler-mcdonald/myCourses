@@ -20,6 +20,7 @@ import UserSignUp from "./components/UserSignUp";
 import CreateCourse from "./components/CreateCourse";
 import { NotFound } from "./components/NotFound";
 import { Forbidden } from "./components/Forbidden";
+import { UnhandledError } from "./components/UnhandledError";
 
 export const UserContext = createContext();
 
@@ -70,6 +71,7 @@ function App() {
             />
             <Route path="/signout" element={<Navigate replace to="/" />} />
             <Route path="/forbidden" element={<Forbidden />} />
+            <Route path="/error" element={<UnhandledError />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </UserContext.Provider>

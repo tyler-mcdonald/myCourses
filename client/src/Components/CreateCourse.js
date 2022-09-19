@@ -11,28 +11,50 @@ const CreateCourse = () => {
   const navigate = useNavigate();
   const user = useContext(UserContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { title, description, estimatedTime, materialsNeeded } = course;
-    axios
-      .post(
+    try {
+      const response = await axios.post(
         "http://localhost:5000/api/courses",
         { title, description, estimatedTime, materialsNeeded, userId: 1 },
         {
           auth: {
-            username: "joe@smith.com",
-            password: "joepassword",
+            username: user.emailAddress,
+            password: user.password,
           },
         }
-      )
-      .then((response) => {
-        console.log(response);
-        if (response.status === 201) {
-          return navigate("/");
-        }
-      })
-      .catch((err) => setErrors(() => err.response.data.errors));
+      );
+      if (response.status === 200) return navigate("/");
+    } catch (err) {
+      const statusCode = err.response.status;
+      if (statusCode === 500) return navigate("/error");
+      if (statusCode === 400) return setErrors(err.response.data.errors);
+    }
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const { title, description, estimatedTime, materialsNeeded } = course;
+  //   axios
+  //     .post(
+  //       "http://localhost:5000/api/courses",
+  //       { title, description, estimatedTime, materialsNeeded, userId: 1 },
+  //       {
+  //         auth: {
+  //           username: user.emailAddress,
+  //           password: user.password,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       console.log(response);
+  //       if (response.status === 201) {
+  //         return navigate("/");
+  //       }
+  //     })
+  //     .catch((err) => setErrors(() => err.response.data.errors));
+  // };
 
   return (
     <main>
