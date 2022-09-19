@@ -1,23 +1,9 @@
-## Fixes
+## Fix issues
 [] Submit button needs to be dynamic for all pages
+[] update course button should go back to course view
+[] change auth in all components to be dynamic
 
-## Improve existing functionality
-[] Get paragraphs to work in CourseDetail. Currently they morph into a giant paragraph after creating a course.
-[] In CourseDetails, update the string helper function to accept other separators ( , ; )
-[] dynamically display `Title` in `Header.js`
-[] test all error handling
-
-## Improve design
-[] add active classes for header links
-[] improve signup and signin validation errors display
-
-## New features
-[] implement loading feature for components
-[] delete course confirmation
-[] random id generator for courses
-[] display warning for delete course
-
-## Refactoring
+## Refactor
 [] refactor createCourse component to useState user (like UpdateCourse) instead of individual states
 [] refactor handleSubmit since it's duplicated?
 [] function components with many different states - convert to class (CourseDetail, UpdateCourse, etc)?
@@ -25,8 +11,26 @@
 [] modularize functions in App.js?
 [] refactor post requests
 [] Why do we need a separate state for courseUser? Seems like another async operation on top of retreiving the course?
+[] convert functions to async await
 
-## User Authentication
+## Improve existing functionality
+[] Get paragraphs to work in CourseDetail. Currently they morph into a giant paragraph after creating a course.
+[] In CourseDetails, update the string helper function to accept other separators ( , ; )
+[] dynamically display `Title` in `Header.js`
+[] test all error handling
+[] keep url the same while displaying NotFound instead of redirecting to /notfound
+    * conditionally render NotFound 
+    * ```const courseExists = Object.keys(course).length > 1; // Check if `course` is empty or contains only a `message` key```
+
+## Improve design
+[] add active classes for header links
+[] improve signup and signin validation errors display
+
+## Add new features
+[] implement loading feature for components
+[] delete course confirmation
+[] random id generator for courses
+[] display warning for delete course
 [] email authentication for user signup
 [] confirm password
-[]
+
