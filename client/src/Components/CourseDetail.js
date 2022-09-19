@@ -3,26 +3,32 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import { ActionsBar } from "./ActionsBar";
-import { NotFound } from "./NotFound";
+// import { NotFound } from "./NotFound";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
   const [courseOwner, setCourseOwner] = useState({});
   const navigate = useNavigate();
   const courseId = useParams().id;
-  const courseExists = Object.keys(course).length > 1; // Check if `course` is empty or contains only a `message` key
+  // const courseExists = Object.keys(course).length > 1; // Check if `course` is empty or contains only a `message` key
 
   useEffect(() => {
     const getCourseData = async () => {
       const response = await fetch(
         `http://localhost:5000/api/courses/${courseId}`
       );
+      handleErrors(response.status);
       const data = await response.json();
       setCourse(data);
       setCourseOwner(data.User);
     };
     getCourseData();
   }, []);
+
+  // might move to helpers dir
+  const handleErrors = (status) => {
+    if (status === 404) return navigate("/notfound");
+  };
 
   const handleDelete = async () => {
     axios
@@ -34,7 +40,7 @@ const CourseDetail = () => {
       })
       .then((response) => {
         if (response.status === 204) {
-          return navigate("/");
+          return navigate(`/courses/${courseId}`);
         }
       })
       .catch((err) => {
@@ -44,38 +50,32 @@ const CourseDetail = () => {
   };
 
   return (
-    <>
-      {courseExists ? (
-        <main>
-          <ActionsBar
-            courseId={courseId}
-            handleDelete={handleDelete}
-            courseOwner={courseOwner}
-          />
-          <div className="wrap">
-            <h2>Course Detail</h2>
-            <form>
-              <div className="main--flex">
-                <div>
-                  <h3 className="course--detail--title">Course</h3>
-                  <h4 className="course--name">{course.title}</h4>
-                  <p>{`Instructor: ${courseOwner.firstName} ${courseOwner.lastName}`}</p>
-                  <ReactMarkdown>{course.description}</ReactMarkdown>
-                </div>
-                <div>
-                  <h3 className="course--detail--title">Estimated Time</h3>
-                  <p>{course.estimatedTime}</p>
-                  <h3 className="course--detail--title">Materials Needed</h3>
-                  <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
-                </div>
-              </div>
-            </form>
+    <main>
+      <ActionsBar
+        courseId={courseId}
+        handleDelete={handleDelete}
+        courseOwner={courseOwner}
+      />
+      <div className="wrap">
+        <h2>Course Detail</h2>
+        <form>
+          <div className="main--flex">
+            <div>
+              <h3 className="course--detail--title">Course</h3>
+              <h4 className="course--name">{course.title}</h4>
+              <p>{`Instructor: ${courseOwner.firstName} ${courseOwner.lastName}`}</p>
+              <ReactMarkdown>{course.description}</ReactMarkdown>
+            </div>
+            <div>
+              <h3 className="course--detail--title">Estimated Time</h3>
+              <p>{course.estimatedTime}</p>
+              <h3 className="course--detail--title">Materials Needed</h3>
+              <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
+            </div>
           </div>
-        </main>
-      ) : (
-        <NotFound />
-      )}
-    </>
+        </form>
+      </div>
+    </main>
   );
 };
 
