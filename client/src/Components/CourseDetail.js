@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import { ActionsBar } from "./ActionsBar";
+// import { NotFound } from "./NotFound";
 // helpers
 // import { convertStringToArray } from "../helpers/convertStringToArray";
 
@@ -10,7 +11,7 @@ const CourseDetail = () => {
   const [course, setCourse] = useState({});
   const [courseOwner, setCourseOwner] = useState({});
   const location = useLocation();
-  const courseId = location.pathname.split("/")[2];
+  const courseId = location.pathname.split("/")[2]; //  useParams instead
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +19,12 @@ const CourseDetail = () => {
       const response = await fetch(
         `http://localhost:5000/api/courses/${courseId}`
       );
+
+      if (response.status === 404) {
+        // return redirect("/error");
+        return navigate("/error");
+      }
+
       const data = await response.json();
       setCourse(data);
       setCourseOwner(data.User);
@@ -39,6 +46,7 @@ const CourseDetail = () => {
         }
       })
       .catch((err) => {
+        // render pages based upon errors? --- ie server error?
         console.log(err);
       });
   };
@@ -50,7 +58,6 @@ const CourseDetail = () => {
         handleDelete={handleDelete}
         courseOwner={courseOwner}
       />
-
       <div className="wrap">
         <h2>Course Detail</h2>
         <form>
