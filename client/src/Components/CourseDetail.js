@@ -13,17 +13,16 @@ const CourseDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const getCourseData = async () => {
+      const response = await fetch(
+        `http://localhost:5000/api/courses/${courseId}`
+      );
+      const data = await response.json();
+      setCourse(data);
+      setCourseOwner(data.User);
+    };
     getCourseData();
   }, []);
-
-  const getCourseData = () => {
-    fetch(`http://localhost:5000/api/courses/${courseId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setCourse(data);
-        setCourseOwner(data.User);
-      });
-  };
 
   const handleDelete = async () => {
     axios
@@ -45,7 +44,11 @@ const CourseDetail = () => {
 
   return (
     <main>
-      <ActionsBar courseId={courseId} handleDelete={handleDelete} />
+      <ActionsBar
+        courseId={courseId}
+        handleDelete={handleDelete}
+        courseOwner={courseOwner}
+      />
 
       <div className="wrap">
         <h2>Course Detail</h2>
