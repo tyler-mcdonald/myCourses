@@ -17,6 +17,7 @@ import UpdateCourse from "./components/UpdateCourse";
 import UserSignIn from "./components/UserSignIn";
 import UserSignUp from "./components/UserSignUp";
 import CreateCourse from "./components/CreateCourse";
+import { NotFound } from "./components/NotFound";
 
 export const UserContext = createContext();
 
@@ -38,6 +39,7 @@ function App() {
               path="/courses/create"
               element={<PrivateRoute Component={CreateCourse} />}
             />
+            {/* need to handle not found ids */}
             <Route path="/courses/:id" element={<CourseDetail />} />
             <Route
               path="/courses/:id/update"
@@ -52,6 +54,7 @@ function App() {
               element={<UserSignIn signIn={handleSignIn} />}
             />
             <Route path="/signout" element={<Navigate replace to="/" />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </UserContext.Provider>
       </div>
