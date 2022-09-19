@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import { ActionsBar } from "./ActionsBar";
-// import { NotFound } from "./NotFound";
+import { NotFound } from "./NotFound";
 // helpers
 // import { convertStringToArray } from "../helpers/convertStringToArray";
 
@@ -12,6 +12,7 @@ const CourseDetail = () => {
   const [courseOwner, setCourseOwner] = useState({});
   const navigate = useNavigate();
   const courseId = useParams().id;
+  const courseExists = Object.keys(course).length > 2; // if course object is empty or displays error message
 
   useEffect(() => {
     const getCourseData = async () => {
@@ -21,7 +22,7 @@ const CourseDetail = () => {
 
       if (response.status === 404) {
         // return redirect("/error");
-        return navigate("/error");
+        // return navigate("/error");
       }
 
       const data = await response.json();
@@ -51,32 +52,38 @@ const CourseDetail = () => {
   };
 
   return (
-    <main>
-      <ActionsBar
-        courseId={courseId}
-        handleDelete={handleDelete}
-        courseOwner={courseOwner}
-      />
-      <div className="wrap">
-        <h2>Course Detail</h2>
-        <form>
-          <div className="main--flex">
-            <div>
-              <h3 className="course--detail--title">Course</h3>
-              <h4 className="course--name">{course.title}</h4>
-              <p>{`Instructor: ${courseOwner.firstName} ${courseOwner.lastName}`}</p>
-              <ReactMarkdown>{course.description}</ReactMarkdown>
-            </div>
-            <div>
-              <h3 className="course--detail--title">Estimated Time</h3>
-              <p>{course.estimatedTime}</p>
-              <h3 className="course--detail--title">Materials Needed</h3>
-              <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
-            </div>
+    <>
+      {courseExists ? (
+        <main>
+          <ActionsBar
+            courseId={courseId}
+            handleDelete={handleDelete}
+            courseOwner={courseOwner}
+          />
+          <div className="wrap">
+            <h2>Course Detail</h2>
+            <form>
+              <div className="main--flex">
+                <div>
+                  <h3 className="course--detail--title">Course</h3>
+                  <h4 className="course--name">{course.title}</h4>
+                  <p>{`Instructor: ${courseOwner.firstName} ${courseOwner.lastName}`}</p>
+                  <ReactMarkdown>{course.description}</ReactMarkdown>
+                </div>
+                <div>
+                  <h3 className="course--detail--title">Estimated Time</h3>
+                  <p>{course.estimatedTime}</p>
+                  <h3 className="course--detail--title">Materials Needed</h3>
+                  <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </main>
+        </main>
+      ) : (
+        <NotFound />
+      )}
+    </>
   );
 };
 
