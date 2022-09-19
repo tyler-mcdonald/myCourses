@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import { ActionsBar } from "./ActionsBar";
-// import { NotFound } from "./NotFound";
+import { UserContext } from "../App";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
   const [courseOwner, setCourseOwner] = useState({});
+  const user = useContext(UserContext);
   const navigate = useNavigate();
   const courseId = useParams().id;
   // const courseExists = Object.keys(course).length > 1; // Check if `course` is empty or contains only a `message` key
@@ -31,23 +32,37 @@ const CourseDetail = () => {
   };
 
   const handleDelete = async () => {
-    axios
-      .delete(`http://localhost:5000/api/courses/${courseId}`, {
-        auth: {
-          username: "joe@smith.com",
-          password: "joepassword",
-        },
-      })
-      .then((response) => {
-        if (response.status === 204) {
-          return navigate(`/courses/${courseId}`);
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/courses/${courseId}`,
+        {
+          auth: { username: user.emailAddress, password: user.password },
         }
-      })
-      .catch((err) => {
-        // render pages based upon errors? --- ie server error?
-        console.log(err);
-      });
+      );
+      if (response.status === 204) return navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  // const handleDelete = async () => {
+  //   axios
+  //     .delete(`http://localhost:5000/api/courses/${courseId}`, {
+  //       auth: {
+  //         username: "joe@smith.com",
+  //         password: "joepassword",
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (response.status === 204) {
+  //         return navigate("/");
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       // render pages based upon errors? --- ie server error?
+  //       console.log(err);
+  //     });
+  // };
 
   return (
     <main>
