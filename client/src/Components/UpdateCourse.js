@@ -15,29 +15,24 @@ const UpdateCourse = () => {
   const navigate = useNavigate();
 
   // check if current loggeed in user is the course owner
-  const verifyCourseOwner = (owner) => {
-    if (owner) return user.emailAddress === owner.emailAddress;
-  };
+  const verifyCourseOwner = (owner) => user.emailAddress === owner.emailAddress;
 
-  const redirectIfForbidden = (result) => {
-    if (!result) return navigate("/forbidden");
+  const redirectIfForbidden = (verified) => {
+    if (!verified) return navigate("/forbidden");
   };
 
   // get course data
   useEffect(() => {
     async function fetchData() {
-      fetch(`http://localhost:5000/api/courses/${courseId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setCourse(data);
-          return data;
-        })
-        .then((data) => {
-          setCourseOwner(data.User);
-          return data.User;
-        })
-        .then((owner) => verifyCourseOwner(owner))
-        .then((result) => redirectIfForbidden(result));
+      const response = await fetch(
+        `http://localhost:5000/api/courses/${courseId}`
+      );
+      const data = await response.json();
+      const courseOwner = await data.User;
+      setCourse(data);
+      setCourseOwner(courseOwner);
+      const isVerified = verifyCourseOwner(courseOwner);
+      redirectIfForbidden(isVerified);
     }
     fetchData();
   }, [courseId]);
