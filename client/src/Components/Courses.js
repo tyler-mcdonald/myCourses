@@ -18,8 +18,8 @@ const Courses = () => {
       const response = await axios.get(url);
       setCourses(response.data);
     } catch (error) {
-      const errorRoute = handleErrors(error.response.status);
-      return navigate(errorRoute);
+      const handledError = handleErrors(error);
+      navigate(handledError.route);
     }
   };
 
