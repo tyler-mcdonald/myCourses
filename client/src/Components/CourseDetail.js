@@ -7,24 +7,21 @@ import { UserContext } from "../App";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
-  const [courseOwner, setCourseOwner] = useState({});
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const courseId = useParams().id;
-  // const courseExists = Object.keys(course).length > 1; // Check if `course` is empty or contains only a `message` key
 
   useEffect(() => {
     const getCourseData = async () => {
-      const response = await fetch(
+      const response = await axios.get(
         `http://localhost:5000/api/courses/${courseId}`
       );
       handleErrors(response.status);
-      const data = await response.json();
+      const data = await response.data;
       setCourse(data);
-      setCourseOwner(data.User);
     };
     getCourseData();
-  }, []);
+  }, [courseId]);
 
   // might move to helpers dir
   const handleErrors = (status) => {
@@ -42,34 +39,16 @@ const CourseDetail = () => {
       if (response.status === 204) return navigate("/");
     } catch (err) {
       console.log(err);
+      return navigate("/error");
     }
   };
-
-  // const handleDelete = async () => {
-  //   axios
-  //     .delete(`http://localhost:5000/api/courses/${courseId}`, {
-  //       auth: {
-  //         username: "joe@smith.com",
-  //         password: "joepassword",
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (response.status === 204) {
-  //         return navigate("/");
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       // render pages based upon errors? --- ie server error?
-  //       console.log(err);
-  //     });
-  // };
 
   return (
     <main>
       <ActionsBar
         courseId={courseId}
         handleDelete={handleDelete}
-        courseOwner={courseOwner}
+        courseOwner={course.User}
       />
       <div className="wrap">
         <h2>Course Detail</h2>
@@ -78,7 +57,10 @@ const CourseDetail = () => {
             <div>
               <h3 className="course--detail--title">Course</h3>
               <h4 className="course--name">{course.title}</h4>
-              <p>{`Instructor: ${courseOwner.firstName} ${courseOwner.lastName}`}</p>
+              {/* Prevent error from course.User undefined */}
+              {course.User ? (
+                <p>{`Instructor: ${course.User.firstName} ${course.User.lastName}`}</p>
+              ) : null}
               <ReactMarkdown>{course.description}</ReactMarkdown>
             </div>
             <div>
