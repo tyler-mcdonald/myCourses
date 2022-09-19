@@ -48,8 +48,8 @@ const UpdateCourse = () => {
         },
         {
           auth: {
-            username: "joe@smith.com",
-            password: "joepassword",
+            username: user.emailAddress,
+            password: user.password,
           },
         }
       )

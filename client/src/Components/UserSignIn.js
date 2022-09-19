@@ -27,7 +27,9 @@ const UserSignIn = ({ signIn }) => {
       })
       .then((response) => {
         if (response.status === 200) {
-          signIn(response.data);
+          const data = response.data;
+          data.password = user.password;
+          signIn(data);
           navigate("/");
         }
       })
