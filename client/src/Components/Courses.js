@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "../App";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { CourseTile } from "./CourseTile";
 import { NewCourseButton } from "./NewCourseButton";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
-  const user = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/courses")
-      .then((response) => response.json())
-      .then((data) => setCourses(data));
+    fetchCoursesData("http://localhost:5000/api/courses");
   }, []);
+
+  const fetchCoursesData = async (url) => {
+    const response = await axios.get(url);
+    setCourses(response.data);
+  };
 
   return (
     <main>
@@ -19,7 +21,6 @@ const Courses = () => {
         {courses.map((course) => (
           <CourseTile key={course.id} id={course.id} title={course.title} />
         ))}
-
         <NewCourseButton />
       </div>
     </main>
