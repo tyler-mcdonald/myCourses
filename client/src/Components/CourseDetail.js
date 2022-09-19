@@ -17,12 +17,6 @@ const CourseDetail = () => {
       const response = await fetch(
         `http://localhost:5000/api/courses/${courseId}`
       );
-
-      if (response.status === 404) {
-        // return redirect("/error");
-        // return navigate("/error");
-      }
-
       const data = await response.json();
       setCourse(data);
       setCourseOwner(data.User);
