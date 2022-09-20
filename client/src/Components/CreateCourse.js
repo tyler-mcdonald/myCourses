@@ -26,7 +26,6 @@ export const CreateCourse = () => {
         { title, description, estimatedTime, materialsNeeded, userId: 1 },
         { auth: { username: user.emailAddress, password: user.password } }
       );
-      console.log(response);
       if (response.status === 201) return navigate("/");
     } catch (err) {
       const errors = handleErrors(err);
