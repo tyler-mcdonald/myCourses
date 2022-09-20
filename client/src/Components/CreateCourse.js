@@ -11,8 +11,14 @@ export const CreateCourse = () => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
   const user = useContext(UserContext);
+  const url = "http://localhost:5000/api/courses";
 
-  const createCourse = async (url) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createCourse();
+  };
+
+  const createCourse = async () => {
     try {
       const { title, description, estimatedTime, materialsNeeded } = course;
       const response = await axios.post(
@@ -20,17 +26,12 @@ export const CreateCourse = () => {
         { title, description, estimatedTime, materialsNeeded, userId: 1 },
         { auth: { username: user.emailAddress, password: user.password } }
       );
-      if (response.status === 200) return navigate("/");
+      console.log(response);
+      if (response.status === 201) return navigate("/");
     } catch (err) {
-      // const statusCode = err.response.status;
       const errors = handleErrors(err);
       setErrors(errors.messages);
     }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    createCourse("http://localhost:5000/api/courses");
   };
 
   return (
