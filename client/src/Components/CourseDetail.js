@@ -11,6 +11,7 @@ export const CourseDetail = () => {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const courseId = useParams().id;
+  const url = `http://localhost:5000/api/courses/${courseId}`;
 
   useEffect(() => {
     fetchCourseData();
@@ -18,9 +19,7 @@ export const CourseDetail = () => {
 
   const fetchCourseData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/courses/${courseId}`
-      );
+      const response = await axios.get(url);
       const data = await response.data;
       setCourse(data);
     } catch (err) {
@@ -31,12 +30,9 @@ export const CourseDetail = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/courses/${courseId}`,
-        {
-          auth: { username: user.emailAddress, password: user.password },
-        }
-      );
+      const response = await axios.delete(url, {
+        auth: { username: user.emailAddress, password: user.password },
+      });
       if (response.status === 204) return navigate("/");
     } catch (err) {
       const handled = handleErrors(err);
