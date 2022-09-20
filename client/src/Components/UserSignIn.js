@@ -5,6 +5,7 @@ import { ValidationErrors } from "./ValidationErrors";
 import { Input } from "./Input";
 import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";
+import { handleErrors } from "../helpers/handleErrors";
 
 const UserSignIn = ({ signIn }) => {
   const [user, setUser] = useState({});
@@ -12,37 +13,27 @@ const UserSignIn = ({ signIn }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    getUser();
+    const data = await fetchUserData("http://localhost:5000/api/users");
+    if (data) {
+      signIn(data, "/");
+      return navigate(location.state || "/");
+    }
   };
 
-  const getUser = async () => {
-    axios
-      .get("http://localhost:5000/api/users", {
-        auth: {
-          username: user.emailAddress,
-          password: user.password,
-        },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          const data = response.data;
-          data.password = user.password;
-          signIn(data);
-          if (location.state) {
-            navigate(location.state);
-          } else {
-            navigate("/");
-          }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response.status === 401) {
-          setErrors(["Email and/or password is incorrect"]);
-        }
+  const fetchUserData = async (url) => {
+    try {
+      const response = await axios.get(url, {
+        auth: { username: user.emailAddress, password: user.password },
       });
+      const data = response.data;
+      data.password = user.password;
+      return data;
+    } catch (err) {
+      const error = handleErrors(err);
+      setErrors([error.messages]);
+    }
   };
 
   return (
