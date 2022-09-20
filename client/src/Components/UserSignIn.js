@@ -12,17 +12,18 @@ export const UserSignIn = ({ signIn }) => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const url = "http://localhost:5000/api/users";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await fetchUserData("http://localhost:5000/api/users");
+    const data = await fetchUserData();
     if (data) {
       signIn(data, "/");
       return navigate(location.state || "/");
     }
   };
 
-  const fetchUserData = async (url) => {
+  const fetchUserData = async () => {
     try {
       const response = await axios.get(url, {
         auth: { username: user.emailAddress, password: user.password },
