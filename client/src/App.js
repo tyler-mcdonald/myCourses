@@ -37,45 +37,40 @@ function App() {
     setUser(null);
   };
 
-  /** Forbidden page */
-  // IF user is logged in AND
-  // IF user is not course owner
-  //    Redirect to /forbidden
-
   return (
     <Router>
       <Head />
       {/* where to put this div? */}
-      <div id="root">
-        <UserContext.Provider value={user}>
-          <Header signOut={handleSignOut} />
-          <Routes>
-            <Route exact path="/" element={<Courses />} />
-            <Route
-              exact
-              path="/courses/create"
-              element={<PrivateRoute Component={CreateCourse} />}
-            />
-            <Route path="/courses/:id" element={<CourseDetail />} />
-            <Route
-              path="/courses/:id/update"
-              element={<PrivateRoute Component={UpdateCourse} />}
-            />
-            <Route
-              path="/signup"
-              element={<UserSignUp signIn={handleSignIn} />}
-            />
-            <Route
-              path="/signin"
-              element={<UserSignIn signIn={handleSignIn} />}
-            />
-            <Route path="/signout" element={<Navigate replace to="/" />} />
-            <Route path="/forbidden" element={<Forbidden />} />
-            <Route path="/error" element={<UnhandledError />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </UserContext.Provider>
-      </div>
+      {/* <div id="root"> */}
+      <UserContext.Provider value={user}>
+        <Header signOut={handleSignOut} />
+        <Routes>
+          <Route exact path="/" element={<Courses />} />
+          <Route
+            exact
+            path="/courses/create"
+            element={<PrivateRoute Component={CreateCourse} />}
+          />
+          <Route path="/courses/:id" element={<CourseDetail />} />
+          <Route
+            path="/courses/:id/update"
+            element={<PrivateRoute Component={UpdateCourse} />}
+          />
+          <Route
+            path="/signup"
+            element={<UserSignUp signIn={handleSignIn} />}
+          />
+          <Route
+            path="/signin"
+            element={<UserSignIn signIn={handleSignIn} replace />}
+          />
+          <Route path="/signout" element={<Navigate replace to="/" />} />
+          <Route path="/forbidden" element={<Forbidden />} />
+          <Route path="/error" element={<UnhandledError />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </UserContext.Provider>
+      {/* </div> */}
     </Router>
   );
 }
