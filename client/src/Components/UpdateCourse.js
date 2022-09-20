@@ -27,7 +27,7 @@ export const UpdateCourse = () => {
         navigate(handled.route);
       }
     })();
-  }, [courseId]);
+  }, []);
 
   const verifyCourseOwner = (owner) => user.emailAddress === owner.emailAddress;
 

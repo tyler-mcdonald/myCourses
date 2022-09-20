@@ -20,6 +20,8 @@ export const handleErrors = (error) => {
     case 500:
       handledError.route = "/error";
       break;
+    default:
+      handledError.route = "/error";
   }
 
   return handledError;

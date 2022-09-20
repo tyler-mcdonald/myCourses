@@ -15,7 +15,7 @@ export const CourseDetail = () => {
 
   useEffect(() => {
     fetchCourseData();
-  }, [courseId]);
+  }, []);
 
   const fetchCourseData = async () => {
     try {
