@@ -1,8 +1,11 @@
 export const handleErrors = (error) => {
   const handledError = {};
-  console.log(error);
+
   if (error.response.status === 400) {
     handledError.messages = error.response.data.errors;
+  }
+  if (error.response.status === 401) {
+    handledError.messages = "Email and/or password is incorrect";
   }
   if (error.response.status === 403) {
     handledError.route = "/forbidden";
