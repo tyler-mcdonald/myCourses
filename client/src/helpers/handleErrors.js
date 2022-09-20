@@ -1,21 +1,26 @@
 export const handleErrors = (error) => {
   const handledError = {};
+  const statusCode = error.response.status;
+  console.log("handleErrors called");
 
-  if (error.response.status === 400) {
-    handledError.messages = error.response.data.errors;
+  switch (statusCode) {
+    case 400:
+      handledError.messages = error.response.data.errors;
+      break;
+    case 401:
+      handledError.messages = "Email and/or password is incorrect";
+      break;
+    case 403:
+      handledError.route = "/forbidden";
+      handledError.messages = error.response.data.message;
+      break;
+    case 404:
+      handledError.route = "/notfound";
+      break;
+    case 500:
+      handledError.route = "/error";
+      break;
   }
-  if (error.response.status === 401) {
-    handledError.messages = "Email and/or password is incorrect";
-  }
-  if (error.response.status === 403) {
-    handledError.route = "/forbidden";
-    handledError.messages = error.response.data.message;
-  }
-  if (error.response.status === 404) {
-    handledError.route = "/notfound";
-  }
-  if (error.response.status === 500) {
-    handledError.route = "/error";
-  }
+
   return handledError;
 };
