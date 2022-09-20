@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../App";
 import { ValidationErrors } from "./ValidationErrors";
@@ -10,28 +10,25 @@ export const UpdateCourse = () => {
   const [course, setCourse] = useState({});
   const [errors, setErrors] = useState([]);
   const user = useContext(UserContext);
-  const location = useLocation();
-  const courseId = location.pathname.split("/")[2]; // use params instead
+  const courseId = useParams().id;
   const navigate = useNavigate();
+  const url = `http://localhost:5000/api/courses/${courseId}`;
 
   useEffect(() => {
-    fetchCourseData(`http://localhost:5000/api/courses/${courseId}`);
+    (async function fetchCourseData() {
+      try {
+        const response = await axios.get(url);
+        const data = await response.data;
+        setCourse(response.data);
+        const isVerified = verifyCourseOwner(data.User);
+        redirectIfForbidden(isVerified);
+      } catch (err) {
+        const handled = handleErrors(err);
+        navigate(handled.route);
+      }
+    })();
   }, [courseId]);
 
-  const fetchCourseData = async (url) => {
-    try {
-      const response = await axios.get(url);
-      const data = await response.data;
-      setCourse(response.data);
-      const isVerified = verifyCourseOwner(data.User);
-      redirectIfForbidden(isVerified);
-    } catch (err) {
-      const handled = handleErrors(err);
-      navigate(handled.route);
-    }
-  };
-
-  // check if current loggeed in user is the course owner
   const verifyCourseOwner = (owner) => user.emailAddress === owner.emailAddress;
 
   const redirectIfForbidden = (verified) => {
@@ -40,10 +37,10 @@ export const UpdateCourse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateCourseData(`http://localhost:5000/api/courses/${courseId}`);
+    updateCourseData();
   };
 
-  const updateCourseData = async (url) => {
+  const updateCourseData = async () => {
     try {
       const { title, description, estimatedTime, materialsNeeded } = course;
       const response = await axios.put(
