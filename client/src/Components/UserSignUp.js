@@ -15,14 +15,10 @@ export const UserSignUp = ({ signIn }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await createUser(url);
-    if (response.status === 201) {
-      signIn(user);
-      navigate("/");
-    }
+    createUser();
   };
 
-  const createUser = async (url) => {
+  const createUser = async () => {
     const { firstName, lastName, emailAddress, password } = user;
     try {
       const response = await axios.post(url, {
@@ -31,7 +27,10 @@ export const UserSignUp = ({ signIn }) => {
         emailAddress,
         password,
       });
-      return response;
+      if (response.status === 201) {
+        signIn(user);
+        navigate("/");
+      }
     } catch (err) {
       const handledError = handleErrors(err);
       setErrors(handledError.messages);
