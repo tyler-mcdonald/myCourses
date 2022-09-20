@@ -10,11 +10,11 @@
 [DONE] refactor createCourse component to useState user (like UpdateCourse) instead of individual states
 [DONE] function components with many different states - convert to class (CourseDetail, UpdateCourse, etc)?
 [DONE] refactor createCourse inputs without refs
-[] refactor post requests
-[] Why do we need a separate state for courseUser? Seems like another async operation on top of retreiving the course?
-[] convert functions to async await
-[] axios requests instead of fetch
-[] make urls variables instead of strings (pass url into function)
+[DONE] refactor post requests
+[DONE] Why do we need a separate state for courseUser? Seems like another async operation on top of retreiving the course?
+[DONE] convert functions to async await
+[DONE] axios requests instead of fetch
+[DONE] make urls variables instead of strings (pass url into function)
 [] store all api urls in separate file
 [] modularize all api routes?
 
