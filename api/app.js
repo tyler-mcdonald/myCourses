@@ -5,6 +5,7 @@ const { Sequelize } = require("sequelize");
 const sequelize = new Sequelize("sqlite::memory:");
 const userRoutes = require("./routes/users");
 const courseRoutes = require("./routes/courses");
+const cors = require("cors");
 
 /** Test connection to database */
 try {
@@ -23,6 +24,8 @@ const app = express();
 
 // Parse incoming requests
 app.use(express.json());
+
+app.use(cors());
 
 // HTTP request logging
 app.use(morgan("dev"));
