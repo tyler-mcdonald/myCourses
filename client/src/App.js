@@ -9,17 +9,17 @@ import {
 import Cookies from "js-cookie";
 /** Components */
 import { PrivateRoute } from "./PrivateRoute";
-import { Head } from "./components/Head";
-import { Header } from "./components/Header";
-import { CourseDetail } from "./components/CourseDetail";
-import { Courses } from "./components/Courses";
-import { UpdateCourse } from "./components/UpdateCourse";
-import { UserSignIn } from "./components/UserSignIn";
-import { UserSignUp } from "./components/UserSignUp";
-import { CreateCourse } from "./components/CreateCourse";
-import { NotFound } from "./components/NotFound";
-import { Forbidden } from "./components/Forbidden";
-import { UnhandledError } from "./components/UnhandledError";
+import { Head } from "./Components/Head";
+import { Header } from "./Components/Header";
+import { CourseDetail } from "./Components/CourseDetail";
+import { Courses } from "./Components/Courses";
+import { UpdateCourse } from "./Components/UpdateCourse";
+import { UserSignIn } from "./Components/UserSignIn";
+import { UserSignUp } from "./Components/UserSignUp";
+import { CreateCourse } from "./Components/CreateCourse";
+import { NotFound } from "./Components/NotFound";
+import { Forbidden } from "./Components/Forbidden";
+import { UnhandledError } from "./Components/UnhandledError";
 
 export const UserContext = createContext();
 
