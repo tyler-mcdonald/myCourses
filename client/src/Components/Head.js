@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
-const Head = () => {
+export const Head = () => {
   return (
     <HelmetProvider>
       <Helmet>
@@ -25,5 +25,3 @@ const Head = () => {
     </HelmetProvider>
   );
 };
-
-export default Head;

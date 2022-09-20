@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 
-const Header = ({ signOut }) => {
+export const Header = ({ signOut }) => {
   const user = useContext(UserContext);
   return (
     <header>
@@ -35,5 +35,3 @@ const Header = ({ signOut }) => {
     </header>
   );
 };
-
-export default Header;

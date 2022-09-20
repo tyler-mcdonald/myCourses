@@ -7,7 +7,7 @@ import { Input } from "./Input";
 import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";
 
-const UserSignUp = ({ signIn }) => {
+export const UserSignUp = ({ signIn }) => {
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState([]); // do we need state for this?
   const navigate = useNavigate();
@@ -80,5 +80,3 @@ const UserSignUp = ({ signIn }) => {
     </main>
   );
 };
-
-export default UserSignUp;

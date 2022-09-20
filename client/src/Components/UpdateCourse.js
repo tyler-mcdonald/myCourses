@@ -6,7 +6,7 @@ import { ValidationErrors } from "./ValidationErrors";
 import { CourseInfoForm } from "./CourseInfoForm";
 import { handleErrors } from "../helpers/handleErrors";
 
-const UpdateCourse = () => {
+export const UpdateCourse = () => {
   const [course, setCourse] = useState({});
   const [errors, setErrors] = useState([]);
   const user = useContext(UserContext);
@@ -76,5 +76,3 @@ const UpdateCourse = () => {
     </main>
   );
 };
-
-export default UpdateCourse;

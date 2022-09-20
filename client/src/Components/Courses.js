@@ -5,7 +5,7 @@ import { handleErrors } from "../helpers/handleErrors";
 import { CourseTile } from "./CourseTile";
 import { NewCourseButton } from "./NewCourseButton";
 
-const Courses = () => {
+export const Courses = () => {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
 
@@ -34,5 +34,3 @@ const Courses = () => {
     </main>
   );
 };
-
-export default Courses;

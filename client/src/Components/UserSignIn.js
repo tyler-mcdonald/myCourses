@@ -7,7 +7,7 @@ import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";
 import { handleErrors } from "../helpers/handleErrors";
 
-const UserSignIn = ({ signIn }) => {
+export const UserSignIn = ({ signIn }) => {
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
@@ -66,5 +66,3 @@ const UserSignIn = ({ signIn }) => {
     </main>
   );
 };
-
-export default UserSignIn;

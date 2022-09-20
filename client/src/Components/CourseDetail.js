@@ -6,7 +6,7 @@ import { ActionsBar } from "./ActionsBar";
 import { UserContext } from "../App";
 import { handleErrors } from "../helpers/handleErrors";
 
-const CourseDetail = () => {
+export const CourseDetail = () => {
   const [course, setCourse] = useState({});
   const user = useContext(UserContext);
   const navigate = useNavigate();
@@ -72,5 +72,3 @@ const CourseDetail = () => {
     </main>
   );
 };
-
-export default CourseDetail;

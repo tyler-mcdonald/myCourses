@@ -9,15 +9,14 @@ import {
 import Cookies from "js-cookie";
 /** Components */
 import { PrivateRoute } from "./PrivateRoute";
-import Head from "./components/Head";
-import Header from "./components/Header";
-import CourseDetail from "./components/CourseDetail";
-import Courses from "./components/Courses";
-import UpdateCourse from "./components/UpdateCourse";
-// import SignOut from "./components/SignOut";
-import UserSignIn from "./components/UserSignIn";
-import UserSignUp from "./components/UserSignUp";
-import CreateCourse from "./components/CreateCourse";
+import { Head } from "./components/Head";
+import { Header } from "./components/Header";
+import { CourseDetail } from "./components/CourseDetail";
+import { Courses } from "./components/Courses";
+import { UpdateCourse } from "./components/UpdateCourse";
+import { UserSignIn } from "./components/UserSignIn";
+import { UserSignUp } from "./components/UserSignUp";
+import { CreateCourse } from "./components/CreateCourse";
 import { NotFound } from "./components/NotFound";
 import { Forbidden } from "./components/Forbidden";
 import { UnhandledError } from "./components/UnhandledError";
@@ -40,8 +39,6 @@ function App() {
   return (
     <Router>
       <Head />
-      {/* where to put this div? */}
-      {/* <div id="root"> */}
       <UserContext.Provider value={user}>
         <Header signOut={handleSignOut} />
         <Routes>
@@ -70,7 +67,6 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </UserContext.Provider>
-      {/* </div> */}
     </Router>
   );
 }
