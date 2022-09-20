@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-
 import { ValidationErrors } from "./ValidationErrors";
 import { Input } from "./Input";
 import { SubmitButton } from "./SubmitButton";
@@ -11,6 +10,7 @@ const UserSignIn = ({ signIn }) => {
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +30,11 @@ const UserSignIn = ({ signIn }) => {
           const data = response.data;
           data.password = user.password;
           signIn(data);
-          navigate("/");
+          if (location.state) {
+            navigate(location.state);
+          } else {
+            navigate("/");
+          }
         }
       })
       .catch((err) => {

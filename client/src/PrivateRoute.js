@@ -1,8 +1,15 @@
-import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "./App";
 
 export const PrivateRoute = ({ Component, path = "/signin" }) => {
   const user = useContext(UserContext);
-  return user ? <Component /> : <Navigate to={path} replace />;
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) return navigate(path, { state: location.pathname });
+  });
+
+  return <Component />;
 };
