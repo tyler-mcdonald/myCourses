@@ -1,23 +1,22 @@
 ## Fix issues
-[] Submit button needs to be dynamic for all pages
-[] update course button should go back to course view
-[] change auth in all components to be dynamic
-[] make sure put requests are dynamic
-[] '/courses/:id/update' direct url access issue
-[] updateCourseData needs dynamic userId
+[DONE] Submit button needs to be dynamic for all pages
+[DONE] update course button should go back to course view
+[DONE] change auth in all components to be dynamic
+[DONE] make sure put requests are dynamic
+[DONE] '/courses/:id/update' direct url access issue
+[DONE] updateCourseData needs dynamic userId
 
 ## Refactor
-[] refactor createCourse component to useState user (like UpdateCourse) instead of individual states
-[] refactor handleSubmit since it's duplicated?
-[] function components with many different states - convert to class (CourseDetail, UpdateCourse, etc)?
-[] refactor createCourse inputs without refs
-[] modularize functions in App.js?
+[DONE] refactor createCourse component to useState user (like UpdateCourse) instead of individual states
+[DONE] function components with many different states - convert to class (CourseDetail, UpdateCourse, etc)?
+[DONE] refactor createCourse inputs without refs
 [] refactor post requests
 [] Why do we need a separate state for courseUser? Seems like another async operation on top of retreiving the course?
 [] convert functions to async await
 [] axios requests instead of fetch
 [] make urls variables instead of strings (pass url into function)
 [] store all api urls in separate file
+[] modularize all api routes?
 
 ## Improve existing functionality
 [] Get paragraphs to work in CourseDetail. Currently they morph into a giant paragraph after creating a course.
