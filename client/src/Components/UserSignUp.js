@@ -1,41 +1,41 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import { ValidationErrors } from "./ValidationErrors";
 import { Input } from "./Input";
 import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";
+import { handleErrors } from "../helpers/handleErrors";
 
 export const UserSignUp = ({ signIn }) => {
   const [user, setUser] = useState({});
-  const [errors, setErrors] = useState([]); // do we need state for this?
+  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const url = "http://localhost:5000/api/users";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    createUser();
+    const response = await createUser(url);
+    if (response.status === 201) {
+      signIn(user);
+      navigate("/");
+    }
   };
 
-  const createUser = () => {
-    axios
-      .post("http://localhost:5000/api/users", {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        emailAddress: user.emailAddress,
-        password: user.password,
-      })
-      .then((response) => {
-        if (response.status === 201) {
-          signIn(user);
-          navigate("/");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        const validationErrors = err.response.data.errors;
-        if (validationErrors) setErrors(validationErrors);
+  const createUser = async (url) => {
+    const { firstName, lastName, emailAddress, password } = user;
+    try {
+      const response = await axios.post(url, {
+        firstName,
+        lastName,
+        emailAddress,
+        password,
       });
+      return response;
+    } catch (err) {
+      const handledError = handleErrors(err);
+      setErrors(handledError.messages);
+    }
   };
 
   return (
