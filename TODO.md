@@ -2,6 +2,9 @@
 [] Submit button needs to be dynamic for all pages
 [] update course button should go back to course view
 [] change auth in all components to be dynamic
+[] make sure put requests are dynamic
+[] '/courses/:id/update' direct url access issue
+[] updateCourseData needs dynamic userId
 
 ## Refactor
 [] refactor createCourse component to useState user (like UpdateCourse) instead of individual states
@@ -12,6 +15,9 @@
 [] refactor post requests
 [] Why do we need a separate state for courseUser? Seems like another async operation on top of retreiving the course?
 [] convert functions to async await
+[] axios requests instead of fetch
+[] make urls variables instead of strings (pass url into function)
+[] store all api urls in separate file
 
 ## Improve existing functionality
 [] Get paragraphs to work in CourseDetail. Currently they morph into a giant paragraph after creating a course.
@@ -21,6 +27,7 @@
 [] keep url the same while displaying NotFound instead of redirecting to /notfound
     * conditionally render NotFound 
     * ```const courseExists = Object.keys(course).length > 1; // Check if `course` is empty or contains only a `message` key```
+[] add error handling to all api requests
 
 ## Improve design
 [] add active classes for header links
@@ -33,4 +40,5 @@
 [] display warning for delete course
 [] email authentication for user signup
 [] confirm password
+[] securely store passwords
 
