@@ -8,20 +8,19 @@ import { NewCourseButton } from "./NewCourseButton";
 export const Courses = () => {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
+  const url = "http://localhost:5000/api/courses";
 
   useEffect(() => {
-    fetchCoursesData("http://localhost:5000/api/courses");
+    (async function fetchCoursesData() {
+      try {
+        const response = await axios.get(url);
+        setCourses(response.data);
+      } catch (error) {
+        const handledError = handleErrors(error);
+        navigate(handledError.route);
+      }
+    })();
   }, []);
-
-  const fetchCoursesData = async (url) => {
-    try {
-      const response = await axios.get(url);
-      setCourses(response.data);
-    } catch (error) {
-      const handledError = handleErrors(error);
-      navigate(handledError.route);
-    }
-  };
 
   return (
     <main>
