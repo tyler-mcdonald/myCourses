@@ -13,7 +13,9 @@ router.get(
       firstName: req.currentUser.firstName,
       lastName: req.currentUser.lastName,
       emailAddress: req.currentUser.emailAddress,
+      id: req.currentUser.id,
     };
+    // console.log(req);
     await res.status(200).json(user);
   })
 );
