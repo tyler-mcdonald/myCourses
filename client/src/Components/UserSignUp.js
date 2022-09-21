@@ -15,6 +15,7 @@ export const UserSignUp = () => {
   const navigate = useNavigate();
   const url = "http://localhost:5000/api/users";
 
+  /** Attempt to create a new user, sign in user, and redirect to home */
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await createUser();

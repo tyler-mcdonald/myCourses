@@ -1,5 +1,5 @@
 /** Dependencies */
-import React, { createContext } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -20,8 +20,6 @@ import { NotFound } from "./Components/NotFound";
 import { Forbidden } from "./Components/Forbidden";
 import { UnhandledError } from "./Components/UnhandledError";
 import { ContextProvider } from "./Context";
-
-export const UserContext = createContext();
 
 function App() {
   return (

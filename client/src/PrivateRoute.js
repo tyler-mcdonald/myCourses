@@ -1,10 +1,9 @@
 import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "./App";
 import { Context } from "./Context";
 
 export const PrivateRoute = ({ Component, path = "/signin" }) => {
-  const user = useContext(Context).user;
+  const { user } = useContext(Context);
   const location = useLocation();
   const navigate = useNavigate();
 
