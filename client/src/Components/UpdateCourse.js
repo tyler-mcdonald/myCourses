@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { UserContext } from "../App";
+import { Context } from "../Context";
 import { ValidationErrors } from "./ValidationErrors";
 import { CourseInfoForm } from "./CourseInfoForm";
 import { handleErrors } from "../helpers/handleErrors";
@@ -9,7 +9,7 @@ import { handleErrors } from "../helpers/handleErrors";
 export const UpdateCourse = () => {
   const [course, setCourse] = useState({});
   const [errors, setErrors] = useState([]);
-  const user = useContext(UserContext);
+  const { user } = useContext(Context);
   const courseId = useParams().id;
   const navigate = useNavigate();
   const url = `http://localhost:5000/api/courses/${courseId}`;

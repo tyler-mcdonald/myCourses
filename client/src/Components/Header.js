@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../App";
+import { Context } from "../Context";
 
-export const Header = ({ signOut }) => {
-  const user = useContext(UserContext);
+export const Header = () => {
+  const { user, actions } = useContext(Context);
+
   return (
     <header>
       <div className="wrap header--flex">
@@ -15,7 +16,7 @@ export const Header = ({ signOut }) => {
             <ul className="header--signedin">
               <li>{`Welcome, ${user.firstName}!`}</li>
               <li>
-                <Link to="/signout" onClick={() => signOut()}>
+                <Link to="/signout" onClick={() => actions.signOut()}>
                   Sign Out
                 </Link>
               </li>

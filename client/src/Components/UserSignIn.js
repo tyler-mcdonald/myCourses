@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ValidationErrors } from "./ValidationErrors";
@@ -6,10 +6,12 @@ import { Input } from "./Input";
 import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";
 import { handleErrors } from "../helpers/handleErrors";
+import { Context } from "../Context";
 
-export const UserSignIn = ({ signIn }) => {
+export const UserSignIn = () => {
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState([]);
+  const signIn = useContext(Context).actions.signIn;
   const navigate = useNavigate();
   const location = useLocation();
   const url = "http://localhost:5000/api/users";

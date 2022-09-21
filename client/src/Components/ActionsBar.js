@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { UserContext } from "../App";
+import { Context } from "../Context";
 
 export const ActionsBar = ({ course, handleDelete }) => {
-  const user = useContext(UserContext);
+  const user = useContext(Context).user;
 
   /** Verify that user is course creator */
   const userIsCourseOwner = () => {

@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import { ActionsBar } from "./ActionsBar";
-import { UserContext } from "../App";
 import { handleErrors } from "../helpers/handleErrors";
+import { Context } from "../Context";
 
 export const CourseDetail = () => {
   const [course, setCourse] = useState({});
-  const user = useContext(UserContext);
+  const user = useContext(Context).user;
   const navigate = useNavigate();
   const courseId = useParams().id;
   const url = `http://localhost:5000/api/courses/${courseId}`;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ValidationErrors } from "./ValidationErrors";
@@ -6,10 +6,12 @@ import { Input } from "./Input";
 import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";
 import { handleErrors } from "../helpers/handleErrors";
+import { Context } from "../Context";
 
-export const UserSignUp = ({ signIn }) => {
+export const UserSignUp = () => {
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState([]);
+  const signIn = useContext(Context).actions.signIn;
   const navigate = useNavigate();
   const url = "http://localhost:5000/api/users";
 
@@ -35,6 +37,7 @@ export const UserSignUp = ({ signIn }) => {
       });
       return response;
     } catch (err) {
+      console.log(err);
       const handledError = handleErrors(err);
       setErrors(handledError.messages);
     }

@@ -1,12 +1,11 @@
 /** Dependencies */
-import React, { createContext, useState } from "react";
+import React, { createContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
 } from "react-router-dom";
-import Cookies from "js-cookie";
 /** Components */
 import { PrivateRoute } from "./PrivateRoute";
 import { Head } from "./Components/Head";
@@ -20,27 +19,16 @@ import { CreateCourse } from "./Components/CreateCourse";
 import { NotFound } from "./Components/NotFound";
 import { Forbidden } from "./Components/Forbidden";
 import { UnhandledError } from "./Components/UnhandledError";
+import { ContextProvider } from "./Context";
 
 export const UserContext = createContext();
 
 function App() {
-  const userCookie = Cookies.get("authenticatedUser");
-  const [user, setUser] = useState(userCookie ? JSON.parse(userCookie) : null);
-
-  const handleSignIn = (user) => {
-    setUser(user);
-    Cookies.set("authenticatedUser", JSON.stringify(user));
-  };
-  const handleSignOut = () => {
-    Cookies.remove("authenticatedUser");
-    setUser(null);
-  };
-
   return (
     <Router>
       <Head />
-      <UserContext.Provider value={user}>
-        <Header signOut={handleSignOut} />
+      <ContextProvider>
+        <Header />
         <Routes>
           <Route exact path="/" element={<Courses />} />
           <Route
@@ -53,20 +41,14 @@ function App() {
             path="/courses/:id/update"
             element={<PrivateRoute Component={UpdateCourse} />}
           />
-          <Route
-            path="/signup"
-            element={<UserSignUp signIn={handleSignIn} />}
-          />
-          <Route
-            path="/signin"
-            element={<UserSignIn signIn={handleSignIn} replace />}
-          />
+          <Route path="/signup" element={<UserSignUp />} />
+          <Route path="/signin" element={<UserSignIn replace />} />
           <Route path="/signout" element={<Navigate replace to="/" />} />
           <Route path="/forbidden" element={<Forbidden />} />
           <Route path="/error" element={<UnhandledError />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </UserContext.Provider>
+      </ContextProvider>
     </Router>
   );
 }
