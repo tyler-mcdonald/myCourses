@@ -6,7 +6,7 @@
 export const handleErrors = (error) => {
   const handledError = {};
   const statusCode = error.response.status;
-  console.log("handleErrors called");
+  console.error(error);
 
   switch (statusCode) {
     case 400:

@@ -1,44 +1,25 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import { ValidationErrors } from "./ValidationErrors";
 import { Input } from "./Input";
 import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";
-import { handleErrors } from "../helpers/handleErrors";
 import { Context } from "../Context";
 
 export const UserSignIn = () => {
   const [user, setUser] = useState({});
-  const [errors, setErrors] = useState([]);
-  const signIn = useContext(Context).actions.signIn;
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { errors } = useContext(Context);
+  const { signIn, getUser } = useContext(Context).actions;
   const url = "http://localhost:5000/api/users";
 
-  /** Fetch user data and sign in */
-  const handleSubmit = async (e) => {
+  /** Attempt to fetch user data and sign in */
+  const attemptSignIn = async (e) => {
     e.preventDefault();
-    const data = await fetchUserData();
-    if (data) {
-      signIn(data, "/");
-      return navigate(location.state || "/");
-    }
-  };
-
-  /** GET user request */
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get(url, {
-        auth: { username: user.emailAddress, password: user.password },
-      });
-      const data = response.data;
-      data.password = user.password;
-      return data;
-    } catch (err) {
-      const error = handleErrors(err);
-      setErrors([error.messages]);
-    }
+    const authHeader = {
+      auth: { username: user.emailAddress, password: user.password },
+    };
+    const data = await getUser(url, authHeader);
+    if (data) signIn(data);
   };
 
   return (
@@ -46,7 +27,7 @@ export const UserSignIn = () => {
       <div className="form--centered">
         <h2>Sign In</h2>
         <ValidationErrors errors={errors} />
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => attemptSignIn(e)}>
           <Input
             dataValue={"emailAddress"}
             display={"Email Address"}
