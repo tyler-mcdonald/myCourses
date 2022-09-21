@@ -15,7 +15,12 @@ export const UserSignUp = ({ signIn }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    createUser();
+    const response = await createUser();
+    if (response && response.status === 201) {
+      const authUser = await fetchUserData();
+      signIn(authUser);
+      navigate("/");
+    }
   };
 
   /** POST user request, sign in and navigate to `/` on success */
@@ -28,13 +33,25 @@ export const UserSignUp = ({ signIn }) => {
         emailAddress,
         password,
       });
-      if (response.status === 201) {
-        signIn(user);
-        navigate("/");
-      }
+      return response;
     } catch (err) {
       const handledError = handleErrors(err);
       setErrors(handledError.messages);
+    }
+  };
+
+  /** GET user request */
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(url, {
+        auth: { username: user.emailAddress, password: user.password },
+      });
+      const data = response.data;
+      data.password = user.password;
+      return data;
+    } catch (err) {
+      const error = handleErrors(err);
+      setErrors([error.messages]);
     }
   };
 
