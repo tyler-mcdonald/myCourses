@@ -16,6 +16,7 @@ export const ContextProvider = ({ children }) => {
   /** Set user state, set cookie, and redirect */
   const handleSignIn = (user) => {
     setUser(user);
+    setErrors([]);
     Cookies.set("authenticatedUser", JSON.stringify(user));
     navigate(location.state || "/");
   };
