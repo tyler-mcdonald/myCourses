@@ -1,5 +1,5 @@
 export const ValidationErrors = ({ errors }) => {
-  if (errors.length > 0) {
+  if (errors && errors.length > 0) {
     return (
       <div className="validation--errors">
         <h3>Validation Errors</h3>
