@@ -18,6 +18,7 @@ export const CreateCourse = () => {
     createCourse();
   };
 
+  /** POST request to create course, navigate to `/` on success */
   const createCourse = async () => {
     try {
       const { title, description, estimatedTime, materialsNeeded } = course;

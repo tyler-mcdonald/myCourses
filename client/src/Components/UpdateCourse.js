@@ -14,6 +14,7 @@ export const UpdateCourse = () => {
   const navigate = useNavigate();
   const url = `http://localhost:5000/api/courses/${courseId}`;
 
+  /** GET course data, set course state, verify owner, redirect if not owner */
   useEffect(() => {
     (async function fetchCourseData() {
       try {
@@ -27,10 +28,13 @@ export const UpdateCourse = () => {
         navigate(handled.route);
       }
     })();
+    // eslint-disable-next-line
   }, []);
 
+  /** Check if the current user owns the course */
   const verifyCourseOwner = (owner) => user.emailAddress === owner.emailAddress;
 
+  /** Redirect to `/forbidden` if user is not authorized */
   const redirectIfForbidden = (verified) => {
     if (!verified) return navigate("/forbidden");
   };
@@ -40,6 +44,7 @@ export const UpdateCourse = () => {
     updateCourseData();
   };
 
+  /** PUT course request, navigate to course on success */
   const updateCourseData = async () => {
     try {
       const { title, description, estimatedTime, materialsNeeded } = course;

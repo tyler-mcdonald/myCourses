@@ -5,6 +5,7 @@ import { UserContext } from "../App";
 export const ActionsBar = ({ course, handleDelete }) => {
   const user = useContext(UserContext);
 
+  /** Verify that user is course creator */
   const userIsCourseOwner = () => {
     const courseOwner = course.User;
     if (user && courseOwner) {

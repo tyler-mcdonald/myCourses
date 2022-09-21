@@ -14,6 +14,7 @@ export const UserSignIn = ({ signIn }) => {
   const location = useLocation();
   const url = "http://localhost:5000/api/users";
 
+  /** Fetch user data and sign in */
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await fetchUserData();
@@ -23,6 +24,7 @@ export const UserSignIn = ({ signIn }) => {
     }
   };
 
+  /** GET user request */
   const fetchUserData = async () => {
     try {
       const response = await axios.get(url, {

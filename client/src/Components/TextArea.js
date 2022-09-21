@@ -1,4 +1,10 @@
-export const TextArea = ({ dataValue, display, setState, type, value }) => {
+export const TextArea = ({
+  dataValue,
+  display,
+  setState,
+  type = "text",
+  value,
+}) => {
   return (
     <>
       <label htmlFor={dataValue}>{display}</label>
@@ -18,8 +24,4 @@ export const TextArea = ({ dataValue, display, setState, type, value }) => {
       />
     </>
   );
-};
-
-TextArea.defaultProps = {
-  type: "text",
 };

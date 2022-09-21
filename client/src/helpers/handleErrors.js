@@ -1,3 +1,8 @@
+/**
+ * Takes error object and returns a new object containing error messages and/or redirect routes
+ * @param {object} error - the error object
+ * @returns
+ */
 export const handleErrors = (error) => {
   const handledError = {};
   const statusCode = error.response.status;

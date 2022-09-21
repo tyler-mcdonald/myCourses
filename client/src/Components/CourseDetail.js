@@ -15,8 +15,10 @@ export const CourseDetail = () => {
 
   useEffect(() => {
     fetchCourseData();
+    // eslint-disable-next-line
   }, []);
 
+  /** GET course request, set course state */
   const fetchCourseData = async () => {
     try {
       const response = await axios.get(url);
@@ -28,6 +30,7 @@ export const CourseDetail = () => {
     }
   };
 
+  /** DELETE course request */
   const handleDelete = async () => {
     try {
       const response = await axios.delete(url, {

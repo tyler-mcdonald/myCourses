@@ -21,8 +21,7 @@ export const CourseInfoForm = ({
             value={course ? course.title : ""}
           />
           <p>
-            Instructor:{" "}
-            {user ? `${user.firstName} ${user.lastName}` : "(Not logged in)"}
+            Instructor: {user ? `${user.firstName} ${user.lastName}` : null}
           </p>
           <TextArea
             dataValue={"description"}

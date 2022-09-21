@@ -18,6 +18,7 @@ export const UserSignUp = ({ signIn }) => {
     createUser();
   };
 
+  /** POST user request, sign in and navigate to `/` on success */
   const createUser = async () => {
     const { firstName, lastName, emailAddress, password } = user;
     try {

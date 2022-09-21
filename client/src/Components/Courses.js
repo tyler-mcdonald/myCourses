@@ -10,6 +10,7 @@ export const Courses = () => {
   const navigate = useNavigate();
   const url = "http://localhost:5000/api/courses";
 
+  /** GET courses request, set courses state */
   useEffect(() => {
     (async function fetchCoursesData() {
       try {
@@ -20,6 +21,7 @@ export const Courses = () => {
         navigate(handledError.route);
       }
     })();
+    // eslint-disable-next-line
   }, []);
 
   return (
