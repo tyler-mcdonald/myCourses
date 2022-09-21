@@ -50,7 +50,7 @@ export const UpdateCourse = () => {
       const { title, description, estimatedTime, materialsNeeded } = course;
       const response = await axios.put(
         url,
-        { title, description, estimatedTime, materialsNeeded, userId: 1 },
+        { title, description, estimatedTime, materialsNeeded, userId: user.id },
         { auth: { username: user.emailAddress, password: user.password } }
       );
       if (response.status === 204) {
