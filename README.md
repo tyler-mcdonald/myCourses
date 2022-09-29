@@ -1,4 +1,4 @@
-# Full Stack Courses App
+# myCourses
 
 A full stack app for school administrators create an account and log in view, create, update, and delete courses.
 
