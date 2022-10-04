@@ -13,7 +13,7 @@ export const Head = () => {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
-        <title>Courses</title>
+        <title>myCourses</title>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"

@@ -25,3 +25,5 @@ yarn-error.log*
 # Other
 /client/src/helpers/httpRequests.js
 TODO.md
+/client/markup
+/client/mockups
