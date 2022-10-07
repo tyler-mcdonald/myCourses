@@ -2,7 +2,7 @@
 
 A full stack app for school administrators create an account and log in view, create, update, and delete courses.
 
-This app consumes data from the [myCourses REST API](https://github.com/tyler-mcdonald/myCourses-api) that I designed.
+This app consumes data from the [myCourses REST API](https://github.com/tyler-mcdonald/myCourses-api).
 
 ## Features
 
