@@ -12,7 +12,7 @@ export const UserSignUp = () => {
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState([]);
   const { signIn, getUser } = useContext(Context).actions;
-  const url = "http://localhost:5000/api/users";
+  const url = "https://course-database-api.herokuapp.com/api/users";
 
   /** Attempt to create user and sign in */
   const handleSubmit = async (e) => {

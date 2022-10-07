@@ -27,3 +27,4 @@ yarn-error.log*
 TODO.md
 /client/markup
 /client/mockups
+node_modules

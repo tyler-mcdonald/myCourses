@@ -11,7 +11,7 @@ export const CourseDetail = () => {
   const user = useContext(Context).user;
   const navigate = useNavigate();
   const courseId = useParams().id;
-  const url = `http://localhost:5000/api/courses/${courseId}`;
+  const url = `https://course-database-api.herokuapp.com/api/courses/${courseId}`;
 
   useEffect(() => {
     fetchCourseData();

@@ -11,7 +11,7 @@ export const CreateCourse = () => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
   const user = useContext(Context).user;
-  const url = "http://localhost:5000/api/courses";
+  const url = "https://course-database-api.herokuapp.com/api/courses";
 
   const handleSubmit = (e) => {
     e.preventDefault();

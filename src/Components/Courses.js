@@ -8,7 +8,7 @@ import { NewCourseButton } from "./NewCourseButton";
 export const Courses = () => {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
-  const url = "http://localhost:5000/api/courses";
+  const url = "https://course-database-api.herokuapp.com/api/courses";
 
   /** GET courses request, set courses state */
   useEffect(() => {

@@ -9,7 +9,7 @@ export const Header = () => {
     <header>
       <div className="wrap header--flex">
         <h1 className="header--logo">
-          <Link to="/">Courses</Link>
+          <Link to="/">myCourses</Link>
         </h1>
         <nav>
           {user ? (

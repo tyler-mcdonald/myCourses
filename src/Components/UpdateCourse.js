@@ -12,7 +12,7 @@ export const UpdateCourse = () => {
   const { user } = useContext(Context);
   const courseId = useParams().id;
   const navigate = useNavigate();
-  const url = `http://localhost:5000/api/courses/${courseId}`;
+  const url = `https://course-database-api.herokuapp.com/api/courses/${courseId}`;
 
   /** GET course data, set course state, verify owner, redirect if not owner */
   useEffect(() => {
